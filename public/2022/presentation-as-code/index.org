@@ -1,8 +1,9 @@
 #+TITLE: Presentation as Code
 #+SUBTITLE: Create modern presentations using ORG mode and reveal.js
 #+AUTHOR: Victor Dorneanu
-#+EXPORT_FILE_NAME: index.html
 #+DATE: 2022-01-01
+
+#+EXPORT_FILE_NAME: index.html
 #+OPTIONS: toc:nil \n:t  reveal_width:1200 reveal_height:720
 #+SETUPFILE: ../../../setup/reveal.org
 #+REVEAL_THEME: serif

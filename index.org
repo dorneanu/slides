@@ -5,7 +5,7 @@
 #+OPTIONS: ^:nil p:t
 
 * 2022
-** TODO [[/2022/presentation-as-code/][Presentation as Code]]
+** TODO [[./2022/presentation-as-code/][Presentation as Code]]
 Create modern presentations using ORG mode and ~reveal.js~. Also learn how to use [[https://c3js.org/][c3js]] and [[https://plantuml.com/][plantUML]] effectively and document everything as code.
 * About
 I use Emacs, ORG mode and some HTML/CSS to generate this page. For the presentations I use [[https://revealjs.com][reveal.js]].
