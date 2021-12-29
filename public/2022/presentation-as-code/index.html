@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Presentation as Code</title>
+<meta name="author" content="(Victor Dorneanu)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/serif.css" id="theme"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/gruvbox-light-medium.min.css" />
+<script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js" charset="utf-8"></script>
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1>Presentation as Code</h1><h2>Create modern presentations using ORG mode and reveal.js</h2><p class="author">2022-01-01 Victor Dorneanu</p>
+</section>
+
+<section>
+<section id="slide-orgd846884">
+<h2 id="orgd846884"><span class="section-number-2">1.</span> Motivation</h2>
+<ul>
+<li>because I was sick of Powerpoint<br />
+<ul>
+<li>but also Latex was/is at some point way to much for a simple presentation<br /></li>
+
+</ul></li>
+<li><a href="https://orgmode.org/">ORG</a> file should be single source of truth<br />
+<ul>
+<li>you can export to multiple formats<br />
+<ul>
+<li>PDF<br /></li>
+<li>HTML<br /></li>
+<li>Markdown/Asciidoc etc.<br /></li>
+<li>but also <a href="https://revealjs.com/">reveal.js</a> presentations<br /></li>
+
+</ul></li>
+
+</ul></li>
+<li>reveal.js looks awesome<br />
+<ul>
+<li>the are lots of <a href="https://github.com/rajgoel/reveal.js-plugins">plugins</a><br /></li>
+
+</ul></li>
+<li>highly inspired by <a href="https://zenika.github.io/adoc-presentation-model/reveal/reveal-my-asciidoc.html">Reveal my Asciidoc - A deep dive into presentation-as-code</a><br />
+<ul>
+<li>but I wanted to do it without <code>asciidoc</code><br /></li>
+<li>&ldquo;purely&rdquo; in Emacs and ORG mode<br /></li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org7d740c8">
+<h2 id="org7d740c8"><span class="section-number-2">2.</span> Navigation</h2>
+<p>
+These keyboard shortcuts are available:<br />
+</p>
+<ul>
+<li><code>?</code>: to see the help menu<br /></li>
+<li>navigation:<br />
+<ul>
+<li><code>l</code>: next slide<br /></li>
+<li><code>h</code>: previous slide<br /></li>
+<li><code>k</code>: navigate up<br /></li>
+<li><code>j</code>: navigate down<br /></li>
+
+</ul></li>
+<li><code>m</code>: to toggle menu<br />
+<ul>
+<li>you can switch between themes<br /></li>
+<li>you can jump directly to slides<br /></li>
+
+</ul></li>
+<li><code>ESC</code> / <code>O</code>: slide overview<br /></li>
+<li><code>CTRL+SHIFT F</code>: search in presentation<br /></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgfd23312">
+<h2 id="orgfd23312"><span class="section-number-2">3.</span> Where to start?</h2>
+<p>
+For the beginning I&rsquo;d recommend you the following steps:<br />
+</p>
+<ul>
+<li>you decide which one to use: <a href="https://github.com/yjwen/org-reveal">org-reveal</a> or <a href="https://gitlab.com/oer/org-re-reveal">org-re-reveal</a><br />
+<ul>
+<li>I personally prefer <a href="https://gitlab.com/oer/org-re-reveal">org-re-reveal</a><br /></li>
+
+</ul></li>
+<li>you checkout <a href="https://github.com/dorneanu/orgveal">this repository</a> and closely inspect <code>index.org</code><br />
+<ul>
+<li>there is a <code>.dir-locals.el</code> which reads the content of <code>reveals-plugins-conf.js</code> and assigns it to <code>org-re-reveal-init-script</code><br /></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org5b879c8">
+<h3 id="org5b879c8"><span class="section-number-3">3.1.</span> Features</h3>
+<ul>
+<li>this presentation uses a CDN to fetch required (JavaScript) libraries<br />
+<ul>
+<li>if you want to use your own <a href="https://revealjs.com/themes/">theme</a>, then you&rsquo;ll need to have the CSS files somewhere on your disk<br /></li>
+
+</ul></li>
+<li>you can easily embed nice looking <b>charts</b> and <b>diagrams</b><br />
+<ul>
+<li>I like <a href="https://c3js.org/">c3js</a> for charts and <a href="https://plantuml.com/">plantuml</a> for diagrams<br /></li>
+<li>but you can add your libraries (check <code>#REVEAL_HEAD_PREAMBLE</code> at the beginning of the file)<br /></li>
+
+</ul></li>
+<li>diagrams are embedded as inline PNG (encoded as <code>base64</code>) in the resulting HTML document<br />
+<ul>
+<li>I use a <a href="https://emacs.stackexchange.com/questions/36091/how-to-write-a-hook-to-transform-each-image-reference-on-export">hook</a> to transform each PNG into base64 on export<br /></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org719ffa9">
+<h2 id="org719ffa9"><span class="section-number-2">4.</span> C3.js</h2>
+<p>
+Awesome <a href="https://d3js.org/">D3.js</a> based chart library. Basic usage in the ORG file:<br />
+</p>
+
+<div class="org-src-container">
+
+<pre   ><code class="html" roll-in>#+begin_export html
+&lt;div id="chart_example"&gt;&lt;/div&gt;
+var chart = c3.generate({
+    bindto: '#chart_example',
+    size: {
+      width: &lt;svg width&gt;,
+      height: &lt;svg height&gt;,
+    },
+    data: {
+     &lt;Your data&gt;
+    }
+});
+&lt;script&gt;
+#+end_export
+</code></pre>
+</div>
+<p>
+All charts are <b>interactive</b>. So make sure you use your mouse! And have a look at all <a href="https://c3js.org/examples.html">examples</a>.<br />
+</p>
+</section>
+<section id="slide-org3a62f2a">
+<h3 id="org3a62f2a"><span class="section-number-3">4.1.</span> Basic line chart</h3>
+<div class="column" style="float:left; width: 30%; font-size: 14px;">
+<div class="org-src-container">
+
+<pre   ><code class="html" >#+begin_export html
+&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+var chart = c3.generate({
+    bindto: '#chart',
+    size: {
+      width: 800,
+      height: 550,
+    },
+    data: {
+      columns: [
+        ['data1', 30, 200, 100, 400, 150, 250],
+        ['data2', 50, 20, 10, 40, 15, 25]
+      ]
+    }
+});
+&lt;/script&gt;
+#+end_export
+</code></pre>
+</div>
+
+</div>
+
+
+<div class="column" style="float:right; width: 70%">
+<div id="chart"></div>
+<script>
+var chart = c3.generate({
+    bindto: '#chart',
+    size: {
+      width: 800,
+      height: 550,
+    },
+    data: {
+      columns: [
+        ['data1', 30, 200, 100, 400, 150, 250],
+        ['data2', 50, 20, 10, 40, 15, 25]
+      ]
+    }
+});
+</script>
+
+</div>
+
+</section>
+<section id="slide-org400a8eb">
+<h3 id="org400a8eb"><span class="section-number-3">4.2.</span> Pie chart</h3>
+<div class="column" style="float:left; width: 50%; font-size: 14px;">
+<div class="org-src-container">
+
+<pre   ><code class="html" >#+begin_export html
+&lt;div id="chart2"&gt;&lt;/div&gt;
+&lt;script&gt;
+var chart = c3.generate({
+    bindto: '#chart2',
+    size: {
+      width: 600,
+      height: 550,
+    },
+    data: {
+        columns: [
+            ['data1', 30],
+            ['data2', 120],
+            ["setosa", 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
+            ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3],
+            ["virginica", 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5, 2.0, 1.9, 2.1, 2.0, 2.4, 2.3, 1.8, 2.2, 2.3, 1.5, 2.3, 2.0, 2.0, 1.8, 2.1, 1.8, 1.8, 1.8, 2.1, 1.6, 1.9, 2.0, 2.2, 1.5, 1.4, 2.3, 2.4, 1.8, 1.8, 2.1, 2.4, 2.3, 1.9, 2.3, 2.5, 2.3, 1.9, 2.0, 2.3, 1.8],
+        ],
+        type : 'donut',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    donut: {
+        title: "Iris Petal Width"
+    }
+});
+&lt;/script&gt;
+#+end_export
+</code></pre>
+</div>
+
+</div>
+
+
+<div class="column" style="float:right; width: 50%">
+<div id="chart2"></div>
+<script>
+var chart = c3.generate({
+    bindto: '#chart2',
+    size: {
+      width: 600,
+      height: 550,
+    },
+    data: {
+        columns: [
+            ['data1', 30],
+            ['data2', 120],
+            ["setosa", 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
+            ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3],
+            ["virginica", 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5, 2.0, 1.9, 2.1, 2.0, 2.4, 2.3, 1.8, 2.2, 2.3, 1.5, 2.3, 2.0, 2.0, 1.8, 2.1, 1.8, 1.8, 1.8, 2.1, 1.6, 1.9, 2.0, 2.2, 1.5, 1.4, 2.3, 2.4, 1.8, 1.8, 2.1, 2.4, 2.3, 1.9, 2.3, 2.5, 2.3, 1.9, 2.0, 2.3, 1.8],
+        ],
+        type : 'donut',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    donut: {
+        title: "Iris Petal Width"
+    }
+});
+</script>
+
+</div>
+
+</section>
+<section id="slide-orgc50bc97">
+<h3 id="orgc50bc97"><span class="section-number-3">4.3.</span> Combination of line and bar chart</h3>
+<div class="column" style="float:left; width: 30%; font-size: 14px;">
+<div class="org-src-container">
+
+<pre   ><code class="html" >#+begin_export html
+&lt;div id="chart3"&gt;&lt;/div&gt;
+&lt;script&gt;
+var chart = c3.generate({
+    bindto: '#chart3',
+    data: {
+        columns: [
+            ['data1', 30, 20, 50, 40, 60, 50],
+            ['data2', 200, 130, 90, 240, 130, 220],
+            ['data3', 300, 200, 160, 400, 250, 250],
+            ['data4', 200, 130, 90, 240, 130, 220],
+            ['data5', 130, 120, 150, 140, 160, 150],
+            ['data6', 90, 70, 20, 50, 60, 120],
+        ],
+        type: 'bar',
+        types: {
+            data3: 'spline',
+            data4: 'line',
+            data6: 'area',
+        },
+        groups: [
+            ['data1','data2']
+        ]
+    },
+    size: {
+      width: 800,
+      height: 550,
+    }
+});
+&lt;/script&gt;
+#+end_export
+</code></pre>
+</div>
+
+</div>
+
+<div class="column" style="float:right; width: 70%">
+<div id="chart3"></div>
+<script>
+var chart = c3.generate({
+    bindto: '#chart3',
+    data: {
+        columns: [
+            ['data1', 30, 20, 50, 40, 60, 50],
+            ['data2', 200, 130, 90, 240, 130, 220],
+            ['data3', 300, 200, 160, 400, 250, 250],
+            ['data4', 200, 130, 90, 240, 130, 220],
+            ['data5', 130, 120, 150, 140, 160, 150],
+            ['data6', 90, 70, 20, 50, 60, 120],
+        ],
+        type: 'bar',
+        types: {
+            data3: 'spline',
+            data4: 'line',
+            data6: 'area',
+        },
+        groups: [
+            ['data1','data2']
+        ]
+    },
+    size: {
+      width: 800,
+      height: 550,
+    }
+});
+</script>
+
+</div>
+
+</section>
+<section id="slide-org49f5365">
+<h3 id="org49f5365"><span class="section-number-3">4.4.</span> Custom data colors</h3>
+<div class="column" style="float:left; width: 40%; font-size: 14px;">
+<div class="org-src-container">
+
+<pre   ><code class="html" >#+begin_export html
+&lt;div id="chart4"&gt;&lt;/div&gt;
+&lt;script&gt;
+var chart = c3.generate({
+    bindto: '#chart4',
+    size: {
+      width: 700,
+      height: 550,
+    },
+    data: {
+        columns: [
+            ['data1', 30, 20, 50, 40, 60, 50],
+            ['data2', 200, 130, 90, 240, 130, 220],
+            ['data3', 300, 200, 160, 400, 250, 250]
+        ],
+        type: 'bar',
+        colors: {
+            data1: '#ff0000',
+            data2: '#00ff00',
+            data3: '#0000ff'
+        },
+        color: function (color, d) {
+            // d will be 'id' when called for legends
+            return d.id &amp;&amp; d.id === 'data3' ? d3.rgb(color).darker(d.value / 150) : color;
+        }
+    }
+});
+&lt;/script&gt;
+#+end_export
+</code></pre>
+</div>
+
+</div>
+
+<div class="column" style="float:right; width: 60%">
+<div id="chart4"></div>
+<script>
+var chart = c3.generate({
+    bindto: '#chart4',
+    size: {
+      width: 700,
+      height: 550,
+    },
+    data: {
+        columns: [
+            ['data1', 30, 20, 50, 40, 60, 50],
+            ['data2', 200, 130, 90, 240, 130, 220],
+            ['data3', 300, 200, 160, 400, 250, 250]
+        ],
+        type: 'bar',
+        colors: {
+            data1: '#ff0000',
+            data2: '#00ff00',
+            data3: '#0000ff'
+        },
+        color: function (color, d) {
+            // d will be 'id' when called for legends
+            return d.id && d.id === 'data3' ? d3.rgb(color).darker(d.value / 150) : color;
+        }
+    }
+});
+</script>
+
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgad78a16">
+<h2 id="orgad78a16"><span class="section-number-2">5.</span> Diagrams</h2>
+<p>
+I like to express myself through pictures/diagrams. A picture is still worth a thounsand words. That&rsquo;s why I use them:<br />
+</p>
+<ul>
+<li>to visualize<br />
+<ul>
+<li>software architecture<br /></li>
+<li>(cloud) infrastructure<br /></li>
+<li>depedencies between some components<br /></li>
+<li>mind maps<br /></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org982db06">
+<h3 id="org982db06"><span class="section-number-3">5.1.</span> Plantuml</h3>
+<p>
+Let me quote <a href="https://en.wikipedia.org/wiki/PlantUML">Wikipedia</a>:<br />
+</p>
+<blockquote >
+<p>
+PlantUML is an open-source tool allowing users to create diagrams from a plain text language. Besides various UML diagrams, PlantUML has support for various other software development related formats (such as Archimate, Block diagram, BPMN, C4, Computer network diagram, ERD, Gantt chart, Mind map, and WBD), as well as visualisation of JSON and YAML files.<br />
+<br />
+The language of PlantUML is an example of a domain-specific language. Besides its own DSL, PlantUML also understands AsciiMath, Creole, DOT, and LaTeX. It uses Graphviz software to layout its diagrams and Tikz for LaTeX support. Images can be output as PNG, SVG, LaTeX and even ASCII art. PlantUML has also been used to allow blind people to design and read UML diagrams.<br />
+</p>
+</blockquote>
+
+<p>
+Just give it a try. You won&rsquo;t regret it! Also check out <a href="https://real-world-plantuml.com/">real-worl-plantuml.com</a> for some <b>real</b> example.<br />
+</p>
+
+</section>
+<section id="slide-orgdb67dbb">
+<h4 id="orgdb67dbb"><span class="section-number-4">5.1.1.</span> Components</h4>
+<div class="column" style="float:left; width: 40%; font-size: 19px;">
+<div class="org-src-container">
+<label class="org-src-name">Component diagram</label>
+<pre   ><code class="uml" >@startuml
+scale 720 width
+skinparam dpi 300
+skinparam backgroundcolor transparent
+note as n
+	ActiveRecord
+	("save yourself")
+end note
+
+note left of Ballot
+	Ballot ballot = new Ballot( ... );
+	ballot.save();
+end note
+@enduml
+</code></pre>
+</div>
+</div>
+
+<div class="column" style="float:right; width: 60%">
+
+<div id="org7586e73" class="figure">
+<p><img src="file:///tmp/babel-F7iBku/plantuml-QQcZQe.png" alt="plantuml-QQcZQe.png" /><br />
+</p>
+</div>
+
+</div>
+
+</section>
+<section id="slide-org8e54a1c">
+<h4 id="org8e54a1c"><span class="section-number-4">5.1.2.</span> Components</h4>
+<div class="column" style="float:left; width: 40%; font-size: 19px;">
+<div class="org-src-container">
+<label class="org-src-name">Full component diagram</label>
+<pre   ><code class="text" >@startuml
+scale 720 width
+skinparam dpi 300
+skinparam backgroundcolor transparent
+note as n
+	ActiveRecord
+	("save yourself")
+end note
+
+class DAO{
+	{static} Entity find(id)
+	{static} List&lt;Entity&gt; findBy(criteria for select)
+	update(Entity)
+	save(Entity)
+	delete(Entity)
+	{static} Finder
+}
+
+Ballot --|&gt; DAO
+
+note left of Ballot
+	Ballot ballot = new Ballot( ... );
+	ballot.save();
+end note
+@enduml
+</code></pre>
+</div>
+</div>
+
+<div class="column" style="float:right; width: 60%">
+
+<div id="org1066e90" class="figure">
+<p><img src="file:///tmp/babel-F7iBku/plantuml-S72AbF.png" alt="plantuml-S72AbF.png" /><br />
+</p>
+</div>
+
+</div>
+
+</section>
+<section id="slide-org1468a1e">
+<h4 id="org1468a1e"><span class="section-number-4">5.1.3.</span> Sequence diagram</h4>
+<div class="column" style="float:left; width: 40%; font-size: 19px;">
+<div class="org-src-container">
+<label class="org-src-name">Some sequence diagram example</label>
+<pre   ><code class="text" >@startuml
+scale 720 width
+skinparam dpi 300
+skinparam backgroundcolor transparent
+
+skinparam Shadowing false
+
+
+Alice -&gt; Bob: Authentication Request
+Bob -&gt; RequestHandler: validated Authenticated Request
+RequestHandler --&gt; Bob: Authenticated Response (OK)
+Bob --&gt; Alice: Authentication Response (OK)
+@enduml
+</code></pre>
+</div>
+</div>
+
+<div class="column" style="float:right; width: 60%">
+
+<div id="org7338dd4" class="figure">
+<p><img src="file:///tmp/babel-F7iBku/plantuml-DN4JW1.png" alt="plantuml-DN4JW1.png" /><br />
+</p>
+</div>
+
+</div>
+
+</section>
+<section id="slide-org8ec8859">
+<h4 id="org8ec8859"><span class="section-number-4">5.1.4.</span> Display JSON data</h4>
+<div class="column" style="float:left; width: 40%; font-size: 19px;">
+<div class="org-src-container">
+<label class="org-src-name">JSON Code</label>
+<pre   ><code class="json" >@startjson
+#highlight "lastName"
+#highlight "address" / "city"
+#highlight "phoneNumbers" / "0" / "number"
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "isAlive": true,
+  "age": 28,
+  "address": {
+    "streetAddress": "21 2nd Street",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10021-3100"
+  },
+  "phoneNumbers": [
+    {
+      "type": "home",
+      "number": "212 555-1234"
+    },
+    {
+      "type": "office",
+      "number": "646 555-4567"
+    }
+  ],
+  "children": [],
+  "spouse": null
+}
+@endjson
+</code></pre>
+</div>
+</div>
+
+
+<div class="column" style="float:right; width: 60%">
+
+<div id="org9514351" class="figure">
+<p><img src="file:///tmp/babel-F7iBku/plantuml-9KYDbB.png" alt="plantuml-9KYDbB.png" /><br />
+</p>
+</div>
+
+</div>
+</section>
+<section id="slide-org9942308">
+<h4 id="org9942308"><span class="section-number-4">5.1.5.</span> Same for YAML</h4>
+<div class="column" style="float:left; width: 40%; font-size: 19px;">
+<div class="org-src-container">
+<label class="org-src-name">YAML Code</label>
+<pre   ><code class="yaml" >@startyaml
+#highlight "french-hens"
+#highlight "xmas-fifth-day" / "partridges"
+
+doe: "a deer, a female deer"
+ray: "a drop of golden sun"
+pi: 3.14159
+xmas: true
+french-hens: 3
+calling-birds:
+    - huey
+    - dewey
+    - louie
+    - fred
+xmas-fifth-day:
+    calling-birds: four
+    french-hens: 3
+    golden-rings: 5
+    partridges:
+        count: 1
+        location: "a pear tree"
+    turtle-doves: two
+@endyaml
+
+</code></pre>
+</div>
+</div>
+
+
+<div class="column" style="float:right; width: 60%">
+
+<div id="org4cf0980" class="figure">
+<p><img src="file:///tmp/babel-F7iBku/plantuml-ayUQ2S.png" alt="plantuml-ayUQ2S.png" /><br />
+</p>
+</div>
+
+</div>
+</section>
+<section id="slide-org267a620">
+<h4 id="org267a620"><span class="section-number-4">5.1.6.</span> Simple network diagrams</h4>
+<div class="column" style="float:left; width: 40%; font-size: 19px;">
+<div class="org-src-container">
+<label class="org-src-name">Network diagram</label>
+<pre   ><code class="text" >@startuml
+scale 720 width
+skinparam dpi 300
+skinparam backgroundcolor transparent
+
+nwdiag {
+  network NETWORK_BASE {
+   width = full
+   dev_A   [address = "dev_A" ]
+   dev_B [address = "dev_B" ]
+  }
+  network IntNET1 {
+   width = full
+   dev_B [address = "dev_B1" ]
+   dev_M [address = "dev_M1" ]
+  }
+}
+@enduml
+</code></pre>
+</div>
+</div>
+
+
+<div class="column" style="float:right; width: 60%; height: 550px;">
+
+<div id="org94c7a06" class="figure">
+<p><img src="file:///tmp/babel-F7iBku/plantuml-1duoWX.png" alt="plantuml-1duoWX.png" /><br />
+</p>
+</div>
+
+</div>
+</section>
+<section id="slide-org868a778">
+<h4 id="org868a778"><span class="section-number-4">5.1.7.</span> C4 ACME Example</h4>
+
+<div id="org7c03d8b" class="figure">
+<p><img src="file:///tmp/babel-F7iBku/plantuml-pYZpAf.png" alt="plantuml-pYZpAf.png" /><br />
+</p>
+</div>
+
+</section>
+<section id="slide-org740e98d">
+<h4 id="org740e98d"><span class="section-number-4">5.1.8.</span> Source C4 ACME Example</h4>
+<div style="overflow: scroll; height: 500px;">
+<div class="org-src-container">
+
+<pre   ><code class="text" >@startuml
+scale 720 width
+skinparam dpi 300
+skinparam backgroundcolor transparent
+
+!include  &lt;C4/C4_Context.puml&gt;
+!include &lt;office/Users/user.puml&gt;
+
+LAYOUT_WITH_LEGEND()
+
+
+title Top level Context diagram for ACME Global Widget Production
+
+
+Person(AcmeProdOwner, Acme Production Owner , "&lt;$user&gt; \n Responsible for Production of widgets in ACME Production Site" )
+Person(3rdProdOwner, 3rdParty Production Owner , "&lt;$user&gt; \n Responsible for Production of widgets in 3rdParty Production Site" )
+
+
+System_Boundary(Remote, "Remote") {
+
+    System(ProdSystemHost, "Production Host", "Drives widget Production\n Analyses widget Production data to create reports")
+    System(Analytics, "Analytics", "Provides data analysis and a dashboard view data - including relevant Production data")
+    System(Monitoring, "Monitoring", "Monitors Production Host\nUses AWS Services")
+    System_Ext(SupplyChain, "SupplyChain", "Provides parts to make the widgets")
+    System_Ext(InventoryTracking, "InventoryTracking", "Customer Reference")
+
+
+}
+
+
+
+Enterprise_Boundary(AcmeProd, "ACME Production Site") {
+
+    System(AcmeWorkStation1, "WorkStation1", " Production setup for a group of widgets")
+    System(AcmeWorkStation2, "WorkStation2", " Production setup for a group of widgets")
+    System(AcmeWorkStationN, "WorkStationN", " Production setup for a group of widgets")
+
+}
+
+
+Enterprise_Boundary(3rdProd, "3rdParty Production Site") {
+
+
+    System(3rdWorkStation1, "WorkStation1", " Production setup for a group of widgets")
+    System(3rdWorkStation2, "WorkStation2", " Production setup for a group of widgets")
+    System(3rdWorkStationN, "WorkStationN", " Production setup for a group of widgets")
+}
+
+
+Rel_U(AcmeWorkStation1, ProdSystemHost, "Sends Production report for widget")
+Rel_U(AcmeWorkStation2, ProdSystemHost, "Sends Production report for widget")
+Rel_U(AcmeWorkStationN, ProdSystemHost, "Sends Production report for widget")
+
+
+Rel_U(3rdWorkStation1, ProdSystemHost, "Sends Production report for widget")
+Rel_U(3rdWorkStation2, ProdSystemHost, "Sends Production report for widget")
+Rel_U(3rdWorkStationN, ProdSystemHost, "Sends Production report for widget")
+
+
+
+
+
+Rel_D(AcmeProdOwner, ProdSystemHost, "Reviews Acme and 3rdParty site Production reports")
+Rel_D(3rdProdOwner, ProdSystemHost, "Reviews 3rdParty site Production reports")
+
+
+Rel_D(Analytics, ProdSystemHost, "Data Analysis")
+Rel_D(SupplyChain, ProdSystemHost, "Parts")
+Rel_D(InventoryTracking, ProdSystemHost, "Tracking")
+Rel_D(Monitoring, ProdSystemHost, "Monitoring")
+
+footer %filename() rendered with PlantUML version %version()\nThe Hitchhiker’s Guide to PlantUML
+
+@enduml
+</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orge7b39ba" data-background-video="https://static.slid.es/site/homepage/v1/homepage-video-editor.mp4" data-background-video-loop data-background-video-muted>
+<h2 id="orge7b39ba"><span class="section-number-2">6.</span> Headline</h2>
+<p>
+some text here:<br />
+</p>
+<ul>
+<li>alles klar<br /></li>
+<li>asdak<br />
+<ul>
+<li data-fragment-index="4" class="fragment grow">I will grow.<br /></li>
+<li data-fragment-index="3" class="fragment shrink">I will shrink.<br /></li>
+<li data-fragment-index="2" class="fragment zoom-in">I zoomed in.<br /></li>
+<li data-fragment-index="1" class="fragment fade-out">I will fade out.<br /></li>
+<li>I don&rsquo;t fragment.<br /></li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org6a2b611">
+<h2 id="org6a2b611"><span class="section-number-2">7.</span> Tests for different languages</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+</section>
+<section id="slide-org229875e">
+<h3 id="org229875e"><span class="section-number-3">7.1.</span> HTML</h3>
+<div class="org-src-container">
+
+<pre   ><code class="html" >&lt;h1 class="whatever"&gt;hello, what's your name&lt;/h1&gt;
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org1b0dd99">
+<h3 id="org1b0dd99"><span class="section-number-3">7.2.</span> JavaScript</h3>
+<div class="org-src-container">
+
+<pre   ><code class="js" >console.log("success");
+var x='string using single quote';
+x
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org06ded2f">
+<h3 id="org06ded2f"><span class="section-number-3">7.3.</span> Python</h3>
+<div class="org-src-container">
+
+<pre   ><code class="python" >def factorial(n):
+    if n &lt; 2:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+print(factorial(10))
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org4e58b8d">
+<h3 id="org4e58b8d"><span class="section-number-3">7.4.</span> Go</h3>
+<div class="org-src-container">
+
+<pre   ><code class="go" >type Allergen int
+
+const (
+    IgEggs Allergen = 1 &lt;&lt; iota // 1 &lt;&lt; 0 which is 00000001
+    IgChocolate                 // 1 &lt;&lt; 1 which is 00000010
+    IgNuts                      // 1 &lt;&lt; 2 which is 00000100
+    IgStrawberries              // 1 &lt;&lt; 3 which is 00001000
+    IgShellfish                 // 1 &lt;&lt; 4 which is 00010000
+)
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

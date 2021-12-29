@@ -1,1 +1,2 @@
-Content for slides.dornea.nu
+My personal config for creating modern presentations using ORG mode and [[https://revealjs.com][reveal.js]].
+More description to be added...

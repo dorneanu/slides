@@ -1,9 +1,0 @@
-#+AUTHOR: Victor Dorneanu
-#+SETUPFILE: /cs/priv/repos/org-themes/src/simple_white/simple_white.theme
-#+TITLE: slides.dornea.nu
-#+OPTIONS: ^:nil p:t
-
-* 2022
-  - Presentation as Code
-* About
-I use Emacs, ORG mode and some HTML/CSS to generate this page. For the presentations I use [[https://revealjs.com][reveal.js]].
