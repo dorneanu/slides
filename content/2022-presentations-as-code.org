@@ -3,10 +3,9 @@
 #+AUTHOR: Victor Dorneanu
 #+DATE: 2022-01-01
 
-#+EXPORT_FILE_NAME: index.html
-#+OPTIONS: toc:nil \n:t  reveal_width:1200 reveal_height:720
-#+SETUPFILE: ../../../setup/reveal.org
-#+REVEAL_THEME: serif
+#+SETUPFILE: reveal.org
+#+EXPORT_FILE_NAME: ../public/2022/presentation-as-code/index.html
+#+REVEAL_THEME: /themes/css/reveal-code-relax.css
 
 * Motivation
 - because I was sick of Powerpoint
@@ -42,7 +41,7 @@ For the beginning I'd recommend you the following steps:
   - I personally prefer [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]]
 - you checkout [[https://github.com/dorneanu/orgveal][this repository]] and closely inspect ~index.org~
   - there is a ~.dir-locals.el~ which reads the content of ~reveals-plugins-conf.js~ and assigns it to ~org-re-reveal-init-script~
-** Features
+* Features
 - this presentation uses a CDN to fetch required (JavaScript) libraries
   - if you want to use your own [[https://revealjs.com/themes/][theme]], then you'll need to have the CSS files somewhere on your disk
 - you can easily embed nice looking *charts* and *diagrams*
@@ -286,7 +285,7 @@ end note
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
 #+ATTR_HTML: :class glightbox
-#+begin_src plantuml  :exports results :noweb yes
+#+begin_src plantuml :file images/component.png  :exports results :noweb yes
 <<pumlcomponent>>
 #+end_src
 #+REVEAL_HTML: </div>
@@ -325,7 +324,7 @@ end note
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
 #+ATTR_HTML: :class glightbox
-#+begin_src plantuml  :exports results :noweb yes
+#+begin_src plantuml :file images/component-full.png  :exports results :noweb yes
 <<pumlcomponentsfull>>
 #+end_src
 #+REVEAL_HTML: </div>
@@ -353,7 +352,7 @@ Bob --> Alice: Authentication Response (OK)
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
 #+ATTR_HTML: :class glightbox
-#+begin_src plantuml  :exports results :noweb yes
+#+begin_src plantuml :file images/sequence.png  :exports results :noweb yes
 <<pumlsequence>>
 #+end_src
 #+REVEAL_HTML: </div>
@@ -397,7 +396,7 @@ Bob --> Alice: Authentication Response (OK)
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
 #+ATTR_HTML: :class glightbox
-#+begin_src plantuml  :exports results :noweb yes
+#+begin_src plantuml :file images/json.png  :exports results :noweb yes
 <<pumljson>>
 #+end_src
 #+REVEAL_HTML: </div>
@@ -435,7 +434,7 @@ xmas-fifth-day:
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
 #+ATTR_HTML: :class glightbox
-#+begin_src plantuml  :exports results :noweb yes
+#+begin_src plantuml :file images/yaml.png  :exports results :noweb yes
 <<pumlyaml>>
 #+end_src
 #+REVEAL_HTML: </div>
@@ -467,7 +466,7 @@ nwdiag {
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 60%; height: 550px;">
 #+ATTR_HTML: :class glightbox
-#+begin_src plantuml  :exports results :noweb yes
+#+begin_src plantuml :file images/network.png :exports results :noweb yes
 <<pumlnetwork>>
 #+end_src
 #+REVEAL_HTML: </div>
@@ -550,8 +549,9 @@ footer %filename() rendered with PlantUML version %version()\nThe Hitchhiker’s
 @enduml
 #+end_src
 
+
 #+ATTR_HTML: :class glightbox
-#+begin_src plantuml  :exports results :noweb yes
+#+begin_src plantuml :file images/c4.png  :exports results :noweb yes
 <<pumlc4acme>>
 #+end_src
 *** Source C4 ACME Example
@@ -614,3 +614,9 @@ const (
     IgShellfish                 // 1 << 4 which is 00010000
 )
 #+END_SRC
+
+
+* Setup                                                                         :noexport:
+# Local variables:
+# after-save-hook: org-re-reveal-export-to-html
+# end:

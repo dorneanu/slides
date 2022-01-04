@@ -1,12 +1,11 @@
+#+OPTIONS: toc:nil \n:t  reveal_width:1200 reveal_height:720
 # #+REVEAL_THEME: themes/css/reveal-code-layers-multicolor.css
-#+REVEAL_THEME: league
 #+REVEAL_TRANS: none
 
 # Configure first slide
 #+REVEAL_TITLE_SLIDE: <h1>%t</h1><h2>%s</h2><p class="author">%d %a</p>
 
 # Configure revealjs relevant settings
-#+REVEAL_ROOT: reveal.js
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
 #+REVEAL_VERSION: 4
 #+REVEAL_PLUGINS: (highlight zoom)
