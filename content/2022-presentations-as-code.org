@@ -7,6 +7,7 @@
 #+EXPORT_FILE_NAME: ../public/2022/presentation-as-code/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-relax.css
 
+
 * Motivation
 - because I was sick of Powerpoint
   - but also Latex was/is at some point way to much for a simple presentation
