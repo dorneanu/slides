@@ -36,21 +36,36 @@ These keyboard shortcuts are available:
 - ~ESC~ / ~O~: slide overview
 - ~CTRL+SHIFT F~: search in presentation
 
+* Features
+- this presentation uses CDN to fetch required (JavaScript) libraries
+  - if you want to use your own [[https://revealjs.com/themes/][theme]], then you'll need to have the CSS files somewhere on your disk
+- you can easily embed nice looking *charts* and *diagrams*
+  - I like [[https://c3js.org/][c3js]] for charts and [[https://plantuml.com/][plantuml]] for diagrams
+  - but you can add your libraries (check ~#REVEAL_HEAD_PREAMBLE~ at the beginning of the [[https://github.com/dorneanu/slides/blob/main/content/reveal.org][reveal.org]] file)
+- diagrams are embedded as inline PNG (encoded as ~base64~) in the resulting HTML document
+  - I use a [[https://emacs.stackexchange.com/questions/36091/how-to-write-a-hook-to-transform-each-image-reference-on-export][hook]] to transform each PNG into base64 on export
+  - This hook is part of the project variables defined in [[https://github.com/dorneanu/slides/blob/main/.dir-locals.el][.dir-locals.el]]
+- I distinguish between [[https://github.com/dorneanu/slides/tree/main/content][content]] and generated HTML/CSS content (available at [[https://github.com/dorneanu/slides/tree/main/public][public]])
+
 * Where to start?
 For the beginning I'd recommend you the following steps:
 - you decide which one to use: [[https://github.com/yjwen/org-reveal][org-reveal]] or [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]]
   - I personally prefer [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]]
-- you checkout [[https://github.com/dorneanu/orgveal][this repository]] and closely inspect ~index.org~
-  - there is a ~.dir-locals.el~ which reads the content of ~reveals-plugins-conf.js~ and assigns it to ~org-re-reveal-init-script~
-* Features
-- this presentation uses a CDN to fetch required (JavaScript) libraries
-  - if you want to use your own [[https://revealjs.com/themes/][theme]], then you'll need to have the CSS files somewhere on your disk
-- you can easily embed nice looking *charts* and *diagrams*
-  - I like [[https://c3js.org/][c3js]] for charts and [[https://plantuml.com/][plantuml]] for diagrams
-  - but you can add your libraries (check ~#REVEAL_HEAD_PREAMBLE~ at the beginning of the file)
-- diagrams are embedded as inline PNG (encoded as ~base64~) in the resulting HTML document
-  - I use a [[https://emacs.stackexchange.com/questions/36091/how-to-write-a-hook-to-transform-each-image-reference-on-export][hook]] to transform each PNG into base64 on export
+- checkout [[https://github.com/dorneanu/slides][this repository]]
+- I use project specific variables defined in [[https://github.com/dorneanu/slides/blob/main/.dir-locals.el][.dir-locals.el]]
+  - content of [[https://github.com/dorneanu/slides/blob/main/content/revealjs-plugins-conf.js][revealjs-plugins-conf.js]] is assigned to ~org-re-reveal-init-script~
+  - use a hook to convert every PNG file into base64 data and insert it directly into the HTML document
 
+* What if you don't use ORG and Emacs?
+- Don't worry!
+- You can still use plain HTML to create your reveal.js presentation (not really recommended)
+- You could use [[https://revealjs.com/markdown/][markdown]]
+- Have a look at [[https://asciidoctor.org/][asciidoctor]] (asciidoc syntax) and[[https://docs.asciidoctor.org/reveal.js-converter/latest/][ asciidoctor reveal.js]]
+  + asciidoc syntax is really simple
+  + you have great support for charts, source code listings and many other things
+  + also checkout [[https://github.com/Zenika/adoc-presentation-model][Zenika's adoc presentation model]] repository for a full-featured example
+- you can also export from ORG to asciidoctor using [[https://github.com/yashi/org-asciidoc/issues/14][org-asciidoc]]
+  + recently I've submitted an [[https://github.com/yashi/org-asciidoc/issues/14][issue]] for better literals support
 * C3.js
 Awesome [[https://d3js.org/][D3.js]] based chart library. Basic usage in the ORG file:
 
