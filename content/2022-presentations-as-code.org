@@ -19,6 +19,7 @@
     - but also [[https://revealjs.com/][reveal.js]] presentations
 - reveal.js looks awesome
   - the are lots of [[https://github.com/rajgoel/reveal.js-plugins][plugins]]
+  - and lots of [[https://github.com/hakimel/reveal.js/wiki/Example-Presentations][examples]]
 - highly inspired by [[https://zenika.github.io/adoc-presentation-model/reveal/reveal-my-asciidoc.html][Reveal my Asciidoc - A deep dive into presentation-as-code]]
   - but I wanted to do it without ~asciidoc~
   - "purely" in Emacs and ORG mode
@@ -38,6 +39,7 @@ These keyboard shortcuts are available:
 
 * Features
 - this presentation uses CDN to fetch required (JavaScript) libraries
+  - no need to checkout reveal.js repository
   - if you want to use your own [[https://revealjs.com/themes/][theme]], then you'll need to have the CSS files somewhere on your disk
 - you can easily embed nice looking *charts* and *diagrams*
   - I like [[https://c3js.org/][c3js]] for charts and [[https://plantuml.com/][plantuml]] for diagrams
@@ -51,13 +53,14 @@ These keyboard shortcuts are available:
 For the beginning I'd recommend you the following steps:
 - you decide which one to use: [[https://github.com/yjwen/org-reveal][org-reveal]] or [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]]
   - I personally prefer [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]]
-- checkout [[https://github.com/dorneanu/slides][this repository]]
+- have a look at [[https://github.com/dorneanu/slides][this repository]]
+- feel free to use my [[https://github.com/dorneanu/slides/blob/main/content/reveal.org][reveal.org]] template
 - I use project specific variables defined in [[https://github.com/dorneanu/slides/blob/main/.dir-locals.el][.dir-locals.el]]
   - content of [[https://github.com/dorneanu/slides/blob/main/content/revealjs-plugins-conf.js][revealjs-plugins-conf.js]] is assigned to ~org-re-reveal-init-script~
   - use a hook to convert every PNG file into base64 data and insert it directly into the HTML document
 
 * What if you don't use ORG and Emacs?
-- Don't worry!
+- *Don't worry*!
 - You can still use plain HTML to create your reveal.js presentation (not really recommended)
 - You could use [[https://revealjs.com/markdown/][markdown]]
 - Have a look at [[https://asciidoctor.org/][asciidoctor]] (asciidoc syntax) and[[https://docs.asciidoctor.org/reveal.js-converter/latest/][ asciidoctor reveal.js]]
@@ -66,6 +69,12 @@ For the beginning I'd recommend you the following steps:
   + also checkout [[https://github.com/Zenika/adoc-presentation-model][Zenika's adoc presentation model]] repository for a full-featured example
 - you can also export from ORG to asciidoctor using [[https://github.com/yashi/org-asciidoc/issues/14][org-asciidoc]]
   + recently I've submitted an [[https://github.com/yashi/org-asciidoc/issues/14][issue]] for better literals support
+* Showcase
+Now it's time for some demos
+#+ATTR_REVEAL: :frag (appear)
+- Charts using *C3.js*
+- Diagrams using *PlantUML*
+- *Literate programming*
 * C3.js
 Awesome [[https://d3js.org/][D3.js]] based chart library. Basic usage in the ORG file:
 
@@ -260,14 +269,16 @@ print("#+begin_export html\n{}\n#+end_export".format(htmlCode))
 print("{}".format(htmlCode))
 #+end_src
 #+REVEAL_HTML: </div>
-
 * Diagrams
 I like to express myself through pictures/diagrams. A picture is still worth a thounsand words. That's why I use them:
 - to visualize
-  - software architecture
-  - (cloud) infrastructure
-  - depedencies between some components
-  - mind maps
+  + software architecture
+  + (cloud) infrastructure
+  + depedencies between some components
+  + mind maps
+- to document
+  + architectural decisions
+  + overall project state
 ** Plantuml
 Let me quote [[https://en.wikipedia.org/wiki/PlantUML][Wikipedia]]:
 #+begin_quote
@@ -276,7 +287,17 @@ PlantUML is an open-source tool allowing users to create diagrams from a plain t
 The language of PlantUML is an example of a domain-specific language. Besides its own DSL, PlantUML also understands AsciiMath, Creole, DOT, and LaTeX. It uses Graphviz software to layout its diagrams and Tikz for LaTeX support. Images can be output as PNG, SVG, LaTeX and even ASCII art. PlantUML has also been used to allow blind people to design and read UML diagrams.
 #+end_quote
 
-Just give it a try. You won't regret it! Also check out [[https://real-world-plantuml.com/][real-worl-plantuml.com]] for some *real* example.
+Just give it a try. You won't regret it! Also check out [[https://real-world-plantuml.com/][real-worl-plantuml.com]] for some *real* examples.
+
+Basic usage in ORG:
+
+#+begin_src fundamental
+,#+begin_src plantuml :noweb-ref <id> <options>
+@startuml
+...
+@enduml
+,#+end_src
+#+end_src
 
 *** Components
 #+REVEAL_HTML: <div class="column" style="float:left; width: 40%; font-size: 19px;">
@@ -576,61 +597,88 @@ footer %filename() rendered with PlantUML version %version()\nThe Hitchhiker’s
 <<pumlc4acme>>
 #+end_src
 #+REVEAL_HTML: </div>
-* Headline
-  :PROPERTIES:
-  :reveal_extra_attr: data-background-video="https://static.slid.es/site/homepage/v1/homepage-video-editor.mp4" data-background-video-loop data-background-video-muted
-  :END:
-  some text here:
-  - alles klar
-  - asdak
-   #+ATTR_REVEAL: :frag (grow shrink zoom-in fade-out none) :frag_idx (4 3 2 1 -)
-   * I will grow.
-   * I will shrink.
-   * I zoomed in.
-   * I will fade out.
-   * I don't fragment.
-* Tests for different languages
-** HTML
-# Code copied from Readme.org
-#+BEGIN_SRC html
-<h1 class="whatever">hello, what's your name</h1>
+* Literate programming
+- You can use [[https://orgmode.org/worg/org-contrib/babel/][ORG babel]] to execute code within ORG documents.
+- similar to IPython/[[https://jupyter.org/][Jupyter]] notebooks
+- you can use ~Babel~ to document your code and the results/output at the same place.
+
+** Shell
+#+CAPTION: Source
+#+begin_src shell :exports both :results raw code
+uname
+#+end_src
+
+#+ATTR_REVEAL: :frag (appear)
+#+CAPTION: Results
+#+RESULTS:
+#+begin_src shell
+Linux
+#+end_src
+
+
+** HTTP requests
+#+CAPTION: Source
+#+BEGIN_SRC http :pretty :exports both :results raw code
+GET https://api.github.com/repos/zweifisch/ob-http/languages
+Accept: application/vnd.github.moondragon+json
 #+END_SRC
 
-** JavaScript
-# Code copied from Readme.org
-#+BEGIN_SRC js
-console.log("success");
-var x='string using single quote';
-x
-#+END_SRC
+#+ATTR_REVEAL: :frag (appear)
+#+CAPTION: Results
+#+RESULTS:
+#+begin_src http
+{
+  "Emacs Lisp": 15327,
+  "Shell": 139
+}
+#+end_src
+
+[[https://github.com/zweifisch/ob-http][ob-http]] is awesome!
+
+** Golang
+
+#+CAPTION: Source
+#+begin_src go :exports both :results output code
+package main
+import "fmt"
+
+func main() {
+    queue := make(chan string, 2)
+    queue <- "one"
+    queue <- "two"
+    close(queue)
+
+    for elem := range queue {
+        fmt.Println(elem)
+    }
+}
+#+end_src
+
+#+ATTR_REVEAL: :frag (appear)
+#+CAPTION: Results
+#+RESULTS:
+#+begin_src go
+one
+two
+#+end_src
 
 ** Python
-# Code copied from howto.org of emacs-reveal-howto
-#+BEGIN_SRC python
-def factorial(n):
-    if n < 2:
-        return 1
-    else:
-        return n * factorial(n - 1)
-
-print(factorial(10))
+#+CAPTION: Source
+#+BEGIN_SRC python :exports both :results output code
+num = 8
+num_sqrt = num ** 0.5
+print('The square root of %0.3f is %0.3f'%(num ,num_sqrt))
 #+END_SRC
 
-** Go
-# Code copied per https://gitlab.com/oer/org-re-reveal/merge_requests/11
-# from there: http://www.igordejanovic.net/courses/tech/GoLang/index.html#/5/19
-#+BEGIN_SRC go
-type Allergen int
+#+ATTR_REVEAL: :frag (appear)
+#+RESULTS:
+#+begin_src python
+The square root of 8.000 is 2.828
+#+end_src
 
-const (
-    IgEggs Allergen = 1 << iota // 1 << 0 which is 00000001
-    IgChocolate                 // 1 << 1 which is 00000010
-    IgNuts                      // 1 << 2 which is 00000100
-    IgStrawberries              // 1 << 3 which is 00001000
-    IgShellfish                 // 1 << 4 which is 00010000
-)
-#+END_SRC
 
+* Conclusion
+TBD
 
 * Setup                                                                         :noexport:
 # Local variables:

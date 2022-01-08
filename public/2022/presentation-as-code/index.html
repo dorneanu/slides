@@ -51,6 +51,7 @@
 <li>reveal.js looks awesome<br />
 <ul>
 <li>the are lots of <a href="https://github.com/rajgoel/reveal.js-plugins">plugins</a><br /></li>
+<li>and lots of <a href="https://github.com/hakimel/reveal.js/wiki/Example-Presentations">examples</a><br /></li>
 
 </ul></li>
 <li>highly inspired by <a href="https://zenika.github.io/adoc-presentation-model/reveal/reveal-my-asciidoc.html">Reveal my Asciidoc - A deep dive into presentation-as-code</a><br />
@@ -98,6 +99,7 @@ These keyboard shortcuts are available:<br />
 <ul>
 <li>this presentation uses CDN to fetch required (JavaScript) libraries<br />
 <ul>
+<li>no need to checkout reveal.js repository<br /></li>
 <li>if you want to use your own <a href="https://revealjs.com/themes/">theme</a>, then you&rsquo;ll need to have the CSS files somewhere on your disk<br /></li>
 
 </ul></li>
@@ -131,7 +133,8 @@ For the beginning I&rsquo;d recommend you the following steps:<br />
 <li>I personally prefer <a href="https://gitlab.com/oer/org-re-reveal">org-re-reveal</a><br /></li>
 
 </ul></li>
-<li>checkout <a href="https://github.com/dorneanu/slides">this repository</a><br /></li>
+<li>have a look at <a href="https://github.com/dorneanu/slides">this repository</a><br /></li>
+<li>feel free to use my <a href="https://github.com/dorneanu/slides/blob/main/content/reveal.org">reveal.org</a> template<br /></li>
 <li>I use project specific variables defined in <a href="https://github.com/dorneanu/slides/blob/main/.dir-locals.el">.dir-locals.el</a><br />
 <ul>
 <li>content of <a href="https://github.com/dorneanu/slides/blob/main/content/revealjs-plugins-conf.js">revealjs-plugins-conf.js</a> is assigned to <code>org-re-reveal-init-script</code><br /></li>
@@ -147,7 +150,7 @@ For the beginning I&rsquo;d recommend you the following steps:<br />
 <section id="slide-5">
 <h2 id="5"><span class="section-number-2">5.</span> What if you don&rsquo;t use ORG and Emacs?</h2>
 <ul>
-<li>Don&rsquo;t worry!<br /></li>
+<li><b>Don&rsquo;t worry</b>!<br /></li>
 <li>You can still use plain HTML to create your reveal.js presentation (not really recommended)<br /></li>
 <li>You could use <a href="https://revealjs.com/markdown/">markdown</a><br /></li>
 <li>Have a look at <a href="https://asciidoctor.org/">asciidoctor</a> (asciidoc syntax) and<a href="https://docs.asciidoctor.org/reveal.js-converter/latest/"> asciidoctor reveal.js</a><br />
@@ -168,7 +171,21 @@ For the beginning I&rsquo;d recommend you the following steps:<br />
 </section>
 <section>
 <section id="slide-6">
-<h2 id="6"><span class="section-number-2">6.</span> C3.js</h2>
+<h2 id="6"><span class="section-number-2">6.</span> Showcase</h2>
+<p>
+Now it&rsquo;s time for some demos<br />
+</p>
+<ul>
+<li class="fragment appear">Charts using <b>C3.js</b><br /></li>
+<li class="fragment appear">Diagrams using <b>PlantUML</b><br /></li>
+<li class="fragment appear"><b>Literate programming</b><br /></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-7">
+<h2 id="7"><span class="section-number-2">7.</span> C3.js</h2>
 <p>
 Awesome <a href="https://d3js.org/">D3.js</a> based chart library. Basic usage in the ORG file:<br />
 </p>
@@ -195,8 +212,8 @@ var chart = c3.generate({
 All charts are <b>interactive</b>. So make sure you use your mouse! And have a look at all <a href="https://c3js.org/examples.html">examples</a>.<br />
 </p>
 </section>
-<section id="slide-6-1">
-<h3 id="6-1"><span class="section-number-3">6.1.</span> Basic line chart</h3>
+<section id="slide-7-1">
+<h3 id="7-1"><span class="section-number-3">7.1.</span> Basic line chart</h3>
 <div class="column" style="float:left; width: 30%; font-size: 14px;">
 <div class="org-src-container">
 
@@ -245,8 +262,8 @@ var chart = c3.generate({
 </div>
 
 </section>
-<section id="slide-6-2">
-<h3 id="6-2"><span class="section-number-3">6.2.</span> Pie chart</h3>
+<section id="slide-7-2">
+<h3 id="7-2"><span class="section-number-3">7.2.</span> Pie chart</h3>
 <div class="column" style="float:left; width: 50%; font-size: 14px;">
 <div class="org-src-container">
 
@@ -315,8 +332,8 @@ var chart = c3.generate({
 </div>
 
 </section>
-<section id="slide-6-3">
-<h3 id="6-3"><span class="section-number-3">6.3.</span> Combination of line and bar chart</h3>
+<section id="slide-7-3">
+<h3 id="7-3"><span class="section-number-3">7.3.</span> Combination of line and bar chart</h3>
 <div class="column" style="float:left; width: 30%; font-size: 14px;">
 <div class="org-src-container">
 
@@ -390,8 +407,8 @@ var chart = c3.generate({
 </div>
 
 </section>
-<section id="slide-6-4">
-<h3 id="6-4"><span class="section-number-3">6.4.</span> Custom data colors</h3>
+<section id="slide-7-4">
+<h3 id="7-4"><span class="section-number-3">7.4.</span> Custom data colors</h3>
 <div class="column" style="float:left; width: 40%; font-size: 14px;">
 <div class="org-src-container">
 
@@ -459,12 +476,11 @@ var chart = c3.generate({
 </script>
 
 </div>
-
 </section>
 </section>
 <section>
-<section id="slide-7">
-<h2 id="7"><span class="section-number-2">7.</span> Diagrams</h2>
+<section id="slide-8">
+<h2 id="8"><span class="section-number-2">8.</span> Diagrams</h2>
 <p>
 I like to express myself through pictures/diagrams. A picture is still worth a thounsand words. That&rsquo;s why I use them:<br />
 </p>
@@ -477,11 +493,17 @@ I like to express myself through pictures/diagrams. A picture is still worth a t
 <li>mind maps<br /></li>
 
 </ul></li>
+<li>to document<br />
+<ul>
+<li>architectural decisions<br /></li>
+<li>overall project state<br /></li>
+
+</ul></li>
 
 </ul>
 </section>
-<section id="slide-7-1">
-<h3 id="7-1"><span class="section-number-3">7.1.</span> Plantuml</h3>
+<section id="slide-8-1">
+<h3 id="8-1"><span class="section-number-3">8.1.</span> Plantuml</h3>
 <p>
 Let me quote <a href="https://en.wikipedia.org/wiki/PlantUML">Wikipedia</a>:<br />
 </p>
@@ -494,12 +516,26 @@ The language of PlantUML is an example of a domain-specific language. Besides it
 </blockquote>
 
 <p>
-Just give it a try. You won&rsquo;t regret it! Also check out <a href="https://real-world-plantuml.com/">real-worl-plantuml.com</a> for some <b>real</b> example.<br />
+Just give it a try. You won&rsquo;t regret it! Also check out <a href="https://real-world-plantuml.com/">real-worl-plantuml.com</a> for some <b>real</b> examples.<br />
 </p>
 
+<p>
+Basic usage in ORG:<br />
+</p>
+
+<div class="org-src-container">
+
+<pre><code class="fundamental" >#+begin_src plantuml :noweb-ref &lt;id&gt; &lt;options&gt;
+@startuml
+...
+@enduml
+#+end_src
+</code></pre>
+</div>
+
 </section>
-<section id="slide-7-1-1">
-<h4 id="7-1-1"><span class="section-number-4">7.1.1.</span> Components</h4>
+<section id="slide-8-1-1">
+<h4 id="8-1-1"><span class="section-number-4">8.1.1.</span> Components</h4>
 <div class="column" style="float:left; width: 40%; font-size: 19px;">
 <div class="org-src-container">
 <label class="org-src-name">Component diagram</label>
@@ -523,7 +559,7 @@ end note
 
 <div class="column" style="float:right; width: 60%">
 
-<div id="orgb66d914" class="figure">
+<div id="org6b23cb8" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACMoAAAE5CAYAAABr117uAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAFLaVRYdHBsYW50dW1sAAEAAAB4nE2Qy27C
 MBBF11jKP4xYhQVRklKoUlWivCpRaBGvvUkmqYUzRrYTxN/XASq68vjeucfjGRrLta1K6TGTcokw
@@ -1580,8 +1616,8 @@ kiRJkiRJkiRJkiQtcv8fbacjygZmGecAAAAASUVORK5CYII="><br />
 </div>
 
 </section>
-<section id="slide-7-1-2">
-<h4 id="7-1-2"><span class="section-number-4">7.1.2.</span> Components</h4>
+<section id="slide-8-1-2">
+<h4 id="8-1-2"><span class="section-number-4">8.1.2.</span> Components</h4>
 <div class="column" style="float:left; width: 40%; font-size: 19px;">
 <div class="org-src-container">
 <label class="org-src-name">Full component diagram</label>
@@ -1616,7 +1652,7 @@ end note
 
 <div class="column" style="float:right; width: 60%">
 
-<div id="org661b10f" class="figure">
+<div id="org3f036bd" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACMoAAASMCAYAAABz6POPAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAGpaVRYdHBsYW50dW1sAAEAAAB4nFWSzW7b
 MBCEzyWgd1jkJB0sSK6bFE4aJI7jAq7dBPm70+TKJUKTBrlSYKR59y6ttHFPIuebXQ6XuogkA7Ub
@@ -3874,8 +3910,8 @@ TkSuQmCC"><br />
 </div>
 
 </section>
-<section id="slide-7-1-3">
-<h4 id="7-1-3"><span class="section-number-4">7.1.3.</span> Sequence diagram</h4>
+<section id="slide-8-1-3">
+<h4 id="8-1-3"><span class="section-number-4">8.1.3.</span> Sequence diagram</h4>
 <div class="column" style="float:left; width: 40%; font-size: 19px;">
 <div class="org-src-container">
 <label class="org-src-name">Some sequence diagram example</label>
@@ -3898,7 +3934,7 @@ Bob --&gt; Alice: Authentication Response (OK)
 
 <div class="column" style="float:right; width: 60%">
 
-<div id="org61b4406" class="figure">
+<div id="org6169205" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACMoAAANaCAYAAAByKDIzAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAFSaVRYdHBsYW50dW1sAAEAAAB4nG1RyW7C
 MBC9W+If5ggHqoRSqHKo2FuxFMR2H2IDFo6degnq33eCaAsSx3nLvKeZjvNofchUhbkUlYB2I4Kz
@@ -5595,8 +5631,8 @@ gg=="><br />
 </div>
 
 </section>
-<section id="slide-7-1-4">
-<h4 id="7-1-4"><span class="section-number-4">7.1.4.</span> Display JSON data</h4>
+<section id="slide-8-1-4">
+<h4 id="8-1-4"><span class="section-number-4">8.1.4.</span> Display JSON data</h4>
 <div class="column" style="float:left; width: 40%; font-size: 19px;">
 <div class="org-src-container">
 <label class="org-src-name">JSON Code</label>
@@ -5636,7 +5672,7 @@ gg=="><br />
 
 <div class="column" style="float:right; width: 60%">
 
-<div id="orgee9f9c4" class="figure">
+<div id="org39acbd9" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAo4AAADBCAIAAADO/aYnAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAHAaVRYdHBsYW50dW1sAAEAAAB4nHWSX0/b
 MBTF3y31O1yZF5BaaEISUJ6AApO6NkMUkNC0B5O4jbfEjvwnUzXx3XfjhCDQ9pBY/p3r43NvcmEs
@@ -6004,8 +6040,8 @@ rqqk3lFq0P8AAAAASUVORK5CYII="><br />
 
 </div>
 </section>
-<section id="slide-7-1-5">
-<h4 id="7-1-5"><span class="section-number-4">7.1.5.</span> Same for YAML</h4>
+<section id="slide-8-1-5">
+<h4 id="8-1-5"><span class="section-number-4">8.1.5.</span> Same for YAML</h4>
 <div class="column" style="float:left; width: 40%; font-size: 19px;">
 <div class="org-src-container">
 <label class="org-src-name">YAML Code</label>
@@ -6040,7 +6076,7 @@ xmas-fifth-day:
 
 <div class="column" style="float:right; width: 60%">
 
-<div id="org78892c2" class="figure">
+<div id="org20cba19" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAn8AAAD3CAIAAADjUKUwAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAGWaVRYdHBsYW50dW1sAAEAAAB4nF1SXU/j
 MBB8t5T/sMq9gISB9FruyBM6vqRee4eA8r7Em8SSY0eOHei/Z9O0ChApUnZmPZ6dzVUX0IctNiYR
@@ -6384,8 +6420,8 @@ PEZBPdEhLQAAAABJRU5ErkJggg=="><br />
 
 </div>
 </section>
-<section id="slide-7-1-6">
-<h4 id="7-1-6"><span class="section-number-4">7.1.6.</span> Simple network diagrams</h4>
+<section id="slide-8-1-6">
+<h4 id="8-1-6"><span class="section-number-4">8.1.6.</span> Simple network diagrams</h4>
 <div class="column" style="float:left; width: 40%; font-size: 19px;">
 <div class="org-src-container">
 <label class="org-src-name">Network diagram</label>
@@ -6414,7 +6450,7 @@ nwdiag {
 
 <div class="column" style="float:right; width: 60%; height: 550px;">
 
-<div id="org260f179" class="figure">
+<div id="org948ba1a" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACMoAAAgFCAYAAACN99zrAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAFYaVRYdHBsYW50dW1sAAEAAAB4nH2RXWvC
 MBSG7wP9Dwev9EJpOqejMNBqHVOr4tcuxpDYxC5YTyRNK2Psvy/TbQqOQSDwPifnOZy0MsO0yXep
@@ -8011,10 +8047,10 @@ AElFTkSuQmCC"><br />
 
 </div>
 </section>
-<section id="slide-7-1-7">
-<h4 id="7-1-7"><span class="section-number-4">7.1.7.</span> C4 ACME Example</h4>
+<section id="slide-8-1-7">
+<h4 id="8-1-7"><span class="section-number-4">8.1.7.</span> C4 ACME Example</h4>
 
-<div id="org979fbcf" class="figure">
+<div id="orgc146fcf" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACMoAAAUbCAYAAADV/N7AAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAqMaVRYdHBsYW50dW1sAAEAAAB4nO1b/W7b
 OBL/30DegZfuAkmwaSxZluXANSp/tdtL0iBONjhsFoFiM7YQW/JKctLsboF7jXu9e5Ljhz4okpLl
@@ -13737,8 +13773,8 @@ YNfw/wGPvCJ+oa4otQAAAABJRU5ErkJggg=="><br />
 </div>
 
 </section>
-<section id="slide-7-1-8">
-<h4 id="7-1-8"><span class="section-number-4">7.1.8.</span> Source C4 ACME Example</h4>
+<section id="slide-8-1-8">
+<h4 id="8-1-8"><span class="section-number-4">8.1.8.</span> Source C4 ACME Example</h4>
 <div style="overflow: scroll; height: 500px;">
 <div class="org-src-container">
 
@@ -13822,82 +13858,108 @@ footer %filename() rendered with PlantUML version %version()\nThe Hitchhiker’s
 </section>
 </section>
 <section>
-<section id="slide-8" data-background-video="https://static.slid.es/site/homepage/v1/homepage-video-editor.mp4" data-background-video-loop data-background-video-muted>
-<h2 id="8"><span class="section-number-2">8.</span> Headline</h2>
-<p>
-some text here:<br />
-</p>
+<section id="slide-9">
+<h2 id="9"><span class="section-number-2">9.</span> Literate programming</h2>
 <ul>
-<li>alles klar<br /></li>
-<li>asdak<br />
-<ul>
-<li data-fragment-index="4" class="fragment grow">I will grow.<br /></li>
-<li data-fragment-index="3" class="fragment shrink">I will shrink.<br /></li>
-<li data-fragment-index="2" class="fragment zoom-in">I zoomed in.<br /></li>
-<li data-fragment-index="1" class="fragment fade-out">I will fade out.<br /></li>
-<li>I don&rsquo;t fragment.<br /></li>
-
-</ul></li>
+<li>You can use <a href="https://orgmode.org/worg/org-contrib/babel/">ORG babel</a> to execute code within ORG documents.<br /></li>
+<li>similar to IPython/<a href="https://jupyter.org/">Jupyter</a> notebooks<br /></li>
+<li>you can use <code>Babel</code> to document your code and the results/output at the same place.<br /></li>
 
 </ul>
-</section>
-</section>
-<section>
-<section id="slide-9">
-<h2 id="9"><span class="section-number-2">9.</span> Tests for different languages</h2>
-<div class="outline-text-2" id="text-9">
-</div>
+
 </section>
 <section id="slide-9-1">
-<h3 id="9-1"><span class="section-number-3">9.1.</span> HTML</h3>
+<h3 id="9-1"><span class="section-number-3">9.1.</span> Shell</h3>
 <div class="org-src-container">
-
-<pre><code class="html" >&lt;h1 class="whatever"&gt;hello, what's your name&lt;/h1&gt;
+<label class="org-src-name">Source</label>
+<pre><code class="shell" >uname
 </code></pre>
 </div>
+
+<div class="org-src-container">
+<label class="org-src-name">Results</label>
+<pre class="fragment (appear)"><code class="shell" >Linux
+</code></pre>
+</div>
+
 
 </section>
 <section id="slide-9-2">
-<h3 id="9-2"><span class="section-number-3">9.2.</span> JavaScript</h3>
+<h3 id="9-2"><span class="section-number-3">9.2.</span> HTTP requests</h3>
 <div class="org-src-container">
-
-<pre><code class="js" >console.log("success");
-var x='string using single quote';
-x
+<label class="org-src-name">Source</label>
+<pre><code class="http" >GET https://api.github.com/repos/zweifisch/ob-http/languages
+Accept: application/vnd.github.moondragon+json
 </code></pre>
 </div>
 
+<div class="org-src-container">
+<label class="org-src-name">Results</label>
+<pre class="fragment (appear)"><code class="http" >{
+  "Emacs Lisp": 15327,
+  "Shell": 139
+}
+</code></pre>
+</div>
+
+<p>
+<a href="https://github.com/zweifisch/ob-http">ob-http</a> is awesome!<br />
+</p>
+
 </section>
 <section id="slide-9-3">
-<h3 id="9-3"><span class="section-number-3">9.3.</span> Python</h3>
+<h3 id="9-3"><span class="section-number-3">9.3.</span> Golang</h3>
 <div class="org-src-container">
+<label class="org-src-name">Source</label>
+<pre><code class="go" >package main
+import "fmt"
 
-<pre><code class="python" >def factorial(n):
-    if n &lt; 2:
-        return 1
-    else:
-        return n * factorial(n - 1)
+func main() {
+    queue := make(chan string, 2)
+    queue &lt;- "one"
+    queue &lt;- "two"
+    close(queue)
 
-print(factorial(10))
+    for elem := range queue {
+        fmt.Println(elem)
+    }
+}
+</code></pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">Results</label>
+<pre class="fragment (appear)"><code class="go" >one
+two
 </code></pre>
 </div>
 
 </section>
 <section id="slide-9-4">
-<h3 id="9-4"><span class="section-number-3">9.4.</span> Go</h3>
+<h3 id="9-4"><span class="section-number-3">9.4.</span> Python</h3>
 <div class="org-src-container">
-
-<pre><code class="go" >type Allergen int
-
-const (
-    IgEggs Allergen = 1 &lt;&lt; iota // 1 &lt;&lt; 0 which is 00000001
-    IgChocolate                 // 1 &lt;&lt; 1 which is 00000010
-    IgNuts                      // 1 &lt;&lt; 2 which is 00000100
-    IgStrawberries              // 1 &lt;&lt; 3 which is 00001000
-    IgShellfish                 // 1 &lt;&lt; 4 which is 00010000
-)
+<label class="org-src-name">Source</label>
+<pre><code class="python" >num = 8
+num_sqrt = num ** 0.5
+print('The square root of %0.3f is %0.3f'%(num ,num_sqrt))
 </code></pre>
 </div>
+
+<div class="org-src-container">
+
+<pre class="fragment (appear)"><code class="python" >The square root of 8.000 is 2.828
+</code></pre>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-10">
+<h2 id="10"><span class="section-number-2">10.</span> Conclusion</h2>
+<p>
+TBD<br />
+</p>
 </section>
 </section>
 </div>
