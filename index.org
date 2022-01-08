@@ -1,15 +1,18 @@
 #+AUTHOR: Victor Dorneanu
-#+SETUPFILE: setup/notes-style.org
+#+SETUPFILE: content/notes-style.org
 #+TITLE: slides.dornea.nu
 #+EXPORT_FILE_NAME: public/index.html
-#+OPTIONS: ^:nil p:t
+#+OPTIONS: num:nil ^:t p:t
 
 * 2022
-** TODO [[./2022/presentation-as-code/][Presentation as Code]]
-Create modern presentations using ORG mode and ~reveal.js~. Also learn how to use [[https://c3js.org/][c3js]] and [[https://plantuml.com/][plantUML]] effectively and document everything as code.
+** WIP [[./2022/presentation-as-code/][Presentation as Code]]
+Create modern presentations using ORG mode and ~reveal.js~. Also learn how to use [[https://c3js.org/][c3js]],
+[[https://plantuml.com/][plantUML]], literate programming effectively and document everything as code.
 * About
-I use Emacs, ORG mode and some HTML/CSS to generate this page. For the presentations I use [[https://revealjs.com][reveal.js]].
-* Comment                                                                       :noexport:
+This page lists all slides/presentations I've published. I use Emacs, ORG mode and some
+HTML/CSS to generate this page. For the presentations I use [[https://revealjs.com][reveal.js]]. You may want to
+have a look at the [[https://github.com/dorneanu/slides][slides]] repository.
+* Comment                                                                                           :noexport:
 # Local variables:
 # after-save-hook: org-html-export-to-html
 # end:
