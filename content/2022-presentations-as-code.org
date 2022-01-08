@@ -3,7 +3,7 @@
 #+AUTHOR: Victor Dorneanu
 #+DATE: 2022-01-01
 
-#+SETUPFILE: reveal.org
+#+SETUPFILE: reveal.setup
 #+EXPORT_FILE_NAME: ../public/2022/presentation-as-code/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-relax.css
 

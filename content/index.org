@@ -1,7 +1,7 @@
 #+AUTHOR: Victor Dorneanu
-#+SETUPFILE: content/notes-style.org
+#+SETUPFILE: notes-style.setup
 #+TITLE: slides.dornea.nu
-#+EXPORT_FILE_NAME: public/index.html
+#+EXPORT_FILE_NAME: ../public/index.html
 #+OPTIONS: num:nil ^:t p:t
 
 * 2022
