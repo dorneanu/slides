@@ -738,6 +738,13 @@ plot data using 2:xtic(1) title 'Maths', '' using ($3) title 'Physics'
   + you can focus on writing content rather than fixing your presentation's layout
 - you can do way more with ORG
   + [[https://orgmode.org/worg/org-tutorials/index.html][ORG tutorials]] is full of interesting ideas
+* Contact
+- About ::  [[https://dornea.nu][dornea.nu]]
+- Blog :: [[https://blog.dornea.nu][blog.dornea.nu]]
+- Github :: [[https://github.com/dorneanu][github.com/dorneanu]]
+- Twitter :: [[https://twitter.com/victordorneanu][@victordorneanu]]
+- LinkedIn :: [[https://www.linkedin.com/in/victor-dorneanu-4bba23101][linkedin.com/in/victor-dorneanu]]
+- Threema :: [[https://threema.id/HCPNAFRD][HCPNAFRD]]
 * Setup                                                                         :noexport:
 # Local variables:
 # after-save-hook: org-re-reveal-export-to-html
