@@ -8,7 +8,6 @@
 #+EXPORT_FILE_NAME: ../public/2022/presentation-as-code/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-relax.css
 
-
 * Motivation
 - because I was sick of Powerpoint
   - but also Latex was/is at some point way to much for a simple presentation
@@ -738,6 +737,7 @@ plot data using 2:xtic(1) title 'Maths', '' using ($3) title 'Physics'
   + you can focus on writing content rather than fixing your presentation's layout
 - you can do way more with ORG
   + [[https://orgmode.org/worg/org-tutorials/index.html][ORG tutorials]] is full of interesting ideas
+
 * Contact
 - About ::  [[https://dornea.nu][dornea.nu]]
 - Blog :: [[https://blog.dornea.nu][blog.dornea.nu]]

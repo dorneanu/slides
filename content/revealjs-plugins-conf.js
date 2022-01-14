@@ -42,7 +42,7 @@ notes_pointer: {
 //
 menu: {
 	numbers: true, // Add slide numbers to the titles in the slide list.
-	titleSelector: 'h1, h2, h3, div.title, caption.title, #toctitle', // Specifies which slide elements will be used for generating the slide titles in the menu.
+	titleSelector: 'h1, h2, h3, h4, h5, div.title, caption.title, #toctitle', // Specifies which slide elements will be used for generating the slide titles in the menu.
 	transitions: true, // Specifies if the transitions menu panel will be shown.
 	openButton: true, // Adds a menu button to the slides to open the menu panel.
 	openSlideNumber: false, // If 'true' allows the slide number in the presentation to open the menu panel
