@@ -1,7 +1,8 @@
 #+TITLE: Presentation as Code
 #+SUBTITLE: Create modern presentations using ORG mode and reveal.js
 #+AUTHOR: Victor Dorneanu
-#+DATE: 2022-01-01
+#+DATE: 2022-01
+#+STARTUP: indent fold
 
 #+SETUPFILE: reveal.setup
 #+EXPORT_FILE_NAME: ../public/2022/presentation-as-code/index.html
@@ -597,10 +598,20 @@ footer %filename() rendered with PlantUML version %version()\nThe Hitchhiker’s
 <<pumlc4acme>>
 #+end_src
 #+REVEAL_HTML: </div>
+*** Additional resources
+- [[https://crashedmind.github.io/PlantUMLHitchhikersGuide/][The Hitchhiker's Guide to PlantUML documentation]]
+- [[https://github.com/milo-minderbinder/AWS-PlantUML][PlantUML sprites, macros, and other includes for AWS components]]
+- [[https://wiseman.net.au/2020-04-22/document-software-using-c4model-and-plantuml][Documenting Software Architecture using the C4 model and PlantUML]]
+- [[https://lukemerrett.com/c4-diagrams-as-code-architectural-joy/amp/][C4, Diagrams as Code & Architectural Joy]]
+- [[http://martyice.github.io/uml-in-postman/][Generating UML Diagrams with Postman]]
+- [[https://blog.jdriven.com/2021/10/PlantUML-Pleasantness-Change-Look-and-feel-With-Themes/][Change look and feel for PlantUML by using themes]]
+- [[https://www.codit.eu/blog/plantuml-tips-and-tricks/][PlantUML tips and tricks]]
+- [[https://plantuml.com/preprocessing][How to pre-process in PlantUML, especially when dealing with raw JSON or YAML]]
+- [[https://www.onwebsecurity.com/configuration/use-emacs-to-create-oauth-2-0-uml-sequence-diagrams.html][Use Emacs to create OAuth 2.0 UML sequence diagrams]]
 * Literate programming
 - You can use [[https://orgmode.org/worg/org-contrib/babel/][ORG babel]] to execute code within ORG documents.
 - similar to IPython/[[https://jupyter.org/][Jupyter]] notebooks
-- you can use ~Babel~ to document your code and the results/output at the same place.
+- you can use [[https://orgmode.org/worg/org-contrib/babel/languages/index.html][Babel]] to document your code and the results/output at the same place.
 
 ** Shell
 #+CAPTION: Source
@@ -614,7 +625,6 @@ uname
 #+begin_src shell
 Linux
 #+end_src
-
 
 ** HTTP requests
 #+CAPTION: Source
@@ -634,6 +644,19 @@ Accept: application/vnd.github.moondragon+json
 #+end_src
 
 [[https://github.com/zweifisch/ob-http][ob-http]] is awesome!
+
+** Elisp
+#+CAPTION: Source
+#+begin_src emacs-lisp :exports both :results raw code
+(directory-files ".")
+#+end_src
+
+#+ATTR_REVEAL: :frag (appear)
+#+CAPTION: Results
+#+RESULTS:
+#+begin_src emacs-lisp
+("." ".." "2022-presentations-as-code.org" "images" "index.org" "notes-style.setup" "reveal.setup" "revealjs-plugins-conf.js" "themes")
+#+end_src
 
 ** Golang
 
@@ -675,11 +698,46 @@ print('The square root of %0.3f is %0.3f'%(num ,num_sqrt))
 #+begin_src python
 The square root of 8.000 is 2.828
 #+end_src
+** gnuplot
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%; font-size: 14px;">
+#+tblname: grades
+| Ben  | 9.2 | 9.9 |
+| Tim  | 6.7 | 7.7 |
+| Tom  | 7.5 | 6.7 |
+| Dean | 8.0 | 7.0 |
 
+#+CAPTION: Source
+#+begin_src gnuplot :var data=grades :exports both :results silent :file ./images/grades.png
+set title "Students' Grades"
+set yrange[0:10]
+set style data histogram
+set terminal png size 400,300
+plot data using 2:xtic(1) title 'Maths', '' using ($3) title 'Physics'
+#+end_src
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
+#+ATTR_REVEAL: :frag (appear)
+#+RESULTS:
+[[file:./images/grades.png]]
+#+REVEAL_HTML: </div>
+
+- [[http://gewhere.github.io/gnuplot-orgmode][Source]]
 
 * Conclusion
-TBD
-
+- [[https://orgmode.org/][ORG mode]] is still one of the most powerful markup languages for text
+- if you don't have the time (and motivation) to learn Emacs/ORG mode
+  + have a look at [[https://asciidoctor.org][asciidoctor]] and ~asciidoc~
+  + if you don't like ~ruby~ and ~gems~, check out [[https://github.com/asciidoctor/asciidoctorj][AsciidoctorJ]] which is a library for running ~asciidoctor~ on the JVM
+  + there are tons of [[https://asciidoctor.org/docs/extensions/][extensions]] you can chose from
+- creating beautiful presentations for ~reveal.js~ is fun and doable just by writing (markup) *code*
+- convince yourself and have a look at the [[https://github.com/dorneanu/slides/blob/main/content/2022-presentations-as-code.org][source]] of this presentation
+  + text content and images at the same place
+  + charts can be easily embedded via custom HTML code
+  + all sorts of diagrams can be generated using PlantUML
+  + you can focus on writing content rather than fixing your presentation's layout
+- you can do way more with ORG
+  + [[https://orgmode.org/worg/org-tutorials/index.html][ORG tutorials]] is full of interesting ideas
 * Setup                                                                         :noexport:
 # Local variables:
 # after-save-hook: org-re-reveal-export-to-html
