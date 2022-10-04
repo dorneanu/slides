@@ -5,6 +5,8 @@
 #+OPTIONS: num:nil ^:t p:t
 
 * 2022
+** WIP [[./2022/hexagonal-architecture][Hexagonal Architecture]]
+How to apply ports & adapters architecture in Python.
 ** DONE [[./2022/presentation-as-code/][Presentation as Code]]
 CLOSED: [2022-01-14 Fri]
 Create modern presentations using ORG mode and ~reveal.js~. Also learn how to use [[https://c3js.org/][c3js]],

@@ -1,0 +1,402 @@
+#+TITLE: Hexagonal Architecture
+#+SUBTITLE: Basic introduction using Python
+#+AUTHOR: Victor Dorneanu
+#+DATE: 2022-05
+#+STARTUP: indent fold
+
+#+SETUPFILE: reveal.setup
+#+EXPORT_FILE_NAME: ../public/2022/hexagonal-architecture/index.html
+#+REVEAL_THEME: /themes/css/reveal-code-relax.css
+
+* Introduction
+** Big Picture
+#+REVEAL_HTML: <div class="column" style="width: 80%; align: center;">
+[[./images/hexagonal-architecture/hex-infra.png]]
+#+REVEAL_HTML: </div>
+** Ports & Adapters
+#+REVEAL_HTML: <div class="column" style="width: 80%; align-center">
+[[./images/hexagonal-architecture/ports-adapters.png]]
+#+REVEAL_HTML: </div>
+
+-- [[https://threedots.tech/post/introducing-clean-architecture/][Source]]
+
+*** Ports
+- A port is an input to your application and the only way the *external* world can reach it
+- Examples:
+  - HTTP/gRPC ~servers~ handling requests from outside to your business application
+  - CLI commands doing something with your business use cases
+  - Pub/Sub message subscribers
+*** Adapters
+- Adapters are sth that talk to the outside world
+- you have to *adapt* your internal data structures to what it's expected outside
+- Examples
+  - SQL queries
+  - HTTP/gRPC ~clients~
+	- file readers/writers
+- Some distinguish between
+  - *primary/driving* adapters
+  - *secondary/driven* adapters
+*** Application logic/core
+- a layer that glues together other layers
+- also known as the place where "use cases" live at
+- this is what *our code* is supposed to do (it's the *main* application)
+- the application logic depends only on own domain entities
+  - if you cannot say which database is used for storing entities, that's a good sign
+  - if you cannot say which URLs it calls for doing authentication, that's a good sign
+  - in general: this layer is "free" of any concrete implementation details
+** Language-agnostic implementation
+:PROPERTIES:
+:reveal_background: ./images/100-explicit-architecture-svg.png
+:reveal_background_trans: slide
+:END:
+*** Uploader: use case description
+#+begin_quote
+As an uploader I'd like to upload documents to some infrastructure. After successful upload I'd like to get a link I can share with my friends.
+#+end_quote
+
+Easy! Some observations:
+- the uploader doesn't mention *where* (storage) the documents should be uploaded to
+- the uploader doesn't mention *how* he/she would like to upload documents
+  - via web client?
+  - via mobile phone?
+  - via CLI? :)
+*** Product Manager: use case description
+#+begin_quote
+As a product manager I'd like to see how many documents each uploader uploads and how many times he/she shares the link.
+#+end_quote
+
+Also easy! Again some observations:
+- PM doesn't mention *where* the metrics should be sent to
+- PM doesn't mention *how* she would like to *view* the metrics
+  - Via Web?
+  - On her smartphone?
+  - Using the CLI?
+*** Use abstractions
+- post-pone decision about concrete implementation details / concrete technologies
+- focus on business cases and use abstractions whenever possible
+- separate concerns
+  - use *SOLID*
+	- you can apply this on different levels
+	  - structures
+	  - namespaces
+	  - modules
+	  - packages
+	  - microservices
+	- just keep *related* things within a boundary (in DDD language: boundary context)
+* PlantUML
+#+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch.png  :results file replace :cmdline -charset UTF-8 :exports results
+@startuml
+
+package "" as app_core {
+    package "Entities" {
+       entity Document {
+         string file_path
+         + meta(): String
+       }
+    }
+
+    package Services {
+       class DocumentUploadService {
+         - storageRepository: DocumentStorageRepository
+         + uploadDocument(file: Document)
+       }
+    }
+
+	package Repositories {
+       interface DocumentStorageRepository {
+	     + save(Document)
+		 + search(): List[Document]
+		 + delete(Document)
+	   }
+
+       interface DocumentMetricsRepository {
+		 + send_metrics()
+	   }
+
+	}
+}
+
+package "Primary/Driving Adapters" as prim_adapters {
+    class HTTPServer {
+	 + run ()
+	 + stop()
+	}
+
+    class CLICommand {
+	 + execute ()
+	}
+}
+
+package "Secondary/Driven Adapters" as sec_adapters {
+    class S3StorageRepository {
+	     + save(Document)
+		 + search(): List[Document]
+		 + delete(Document)
+	}
+
+    class DropboxStorageRepository {
+	     + save(Document)
+		 + search(): List[Document]
+		 + delete(Document)
+	}
+
+    class ELKMetricsRepository {
+		 + send_metrics()
+	}
+
+
+}
+
+prim_adapters -up[hidden]- app_core
+sec_adapters -down[hidden]- app_core
+
+DocumentUploadService --> DocumentStorageRepository: uses
+DocumentUploadService --> DocumentMetricsRepository: uses
+DocumentUploadService --> Document: uses
+
+S3StorageRepository -right-> DocumentStorageRepository: implements
+DropboxStorageRepository -right-> DocumentStorageRepository: implements
+ELKMetricsRepository -right-> DocumentMetricsRepository: implements
+
+S3StorageRepository -up-> AWS_S3: calls
+DropboxStorageRepository -up-> Dropbox: calls
+ELKMetricsRepository -up-> ELK: calls
+
+HTTPServer --> DocumentUploadService: uses
+CLICommand --> DocumentUploadService: uses
+@enduml
+#+end_src
+
+#+RESULTS:
+[[file:./images/hexagonal-architecture/example-hex-arch.png]]
+
+* Domain
+- everything related to the business case
+  - uploader wants to upload some document
+  - PM wants to have some metrics
+** Entities
+#+begin_src python
+
+class Document ():
+	"""A document is an entity"""
+	def __init__(self, path: FilePath):
+		self._file_path = path
+
+	def meta(self):
+		"""Display meta information about the file"""
+		print("Some information")
+#+end_src
+** Services
+*** UploadDocumentService
+#+ATTR_REVEAL: :frag t :frag-idx 2
+#+begin_src python
+class UploadDocumentService:
+	"""Upload a document to storage repository"""
+
+	def __init__(
+		self,
+		storage_repository: DocumentStorageRepository,
+		metrics_repository: DocumentMetricsRepository,
+	):
+		self._storage_repo: DocumentStorageRepository
+		self._metrics_repo: DocumentMetricsRepository
+
+	def upload_document(self, document: Document):
+		self._storage_repository(document)
+		self._metrics_repo.send_metrics()
+#+end_src
+* Repositories
+** Storage
+#+ATTR_REVEAL: :frag t :frag-idx 2
+#+begin_src python
+from import abc import ABC, abstractmethod
+
+class DocumentStorageRepository(ABC):
+	""" Driven port defining an interface for storing documents """
+	@abstractmethod
+	def save(self, path: FilePath):
+		pass
+
+	@abstractmethod
+	def search(self, uuid: uuid):
+		pass
+
+	@abstractmethod
+	def delete(self, uuid: uuid):
+		pass
+#+end_src
+** Metrics
+#+ATTR_REVEAL: :frag t :frag-idx 2
+#+begin_src python
+from import abc import ABC, abstractmethod
+
+class DocumentMetricsRepository(ABC):
+	""" Driven port defining an interface for sending metrics about documents """
+	@abstractmethod
+	def send_metrics(self):
+		pass
+#+end_src
+
+* Adapters
+** Primary / driving
+*** HTTP handler
+The *handler* only depends on *entities* and *services*.
+
+#+ATTR_REVEAL: :frag t :frag-idx 2
+#+begin_src python
+# HTTP controller
+from flask import Flask, request
+from domain.services import UploadDocumentService
+from domain.entities import Document
+
+app = Flask(__name__)
+
+class HTTPController:
+    def __init__(self, upload_service: UploadDocumentService):
+	    self.upload_service = upload_service
+
+	@app.route(self, '/upload', methods=['POST'])
+	def upload_document():
+		"""Uploads a document using DocumentUploadService """
+		# Create a document object
+		doc = entities.Document(request.form.get("document_path"))
+        self.upload_service.upload_document(doc)
+#+end_src
+*** CLI handler
+The *handler* only depends on *entities* and *services*.
+
+#+ATTR_REVEAL: :frag t :frag-idx 2
+#+begin_src python
+# Simpl CLI controller
+import sys, getopt
+from domain.services import UploadDocumentService
+from domain.entities import Document
+
+class CLIController:
+    def __init_(self, arguments, upload_service: UploadDocumentService):
+	    self.args = arguments
+		self.upload_service = upload_service
+
+	def upload(self):
+	   inputfile = ''
+	   try:
+		  opts, args = getopt.getopt(self.args,"hi:",["ifile="])
+	   except getopt.GetoptError:
+		  print 'cli.py -i <inputfile>'
+		  sys.exit(2)
+
+	   for opt, arg in opts:
+		  if opt == '-h':
+			 print 'cli.py -i <inputfile>'
+			 sys.exit()
+
+		  elif opt in ("-i", "--ifile"):
+			 inputfile = arg
+
+
+	   # Create document object
+	   doc = Document(inputfile)
+	   service.upload_service.upload_document(doc)
+#+end_src
+** Secondary / driven
+*** S3
+#+ATTR_REVEAL: :frag t :frag-idx 2
+#+begin_src python
+from domain.entities import Document
+
+class S3StorageRepository:
+    """Implements DocumentStorageRepository """
+	def __init__(self):
+	    # Initiate here connection to AWS S3
+		self.s3_conn = ...
+
+	def save(self, doc: Document):
+	    # Read file contents
+		content = get_file_content(doc)
+		self.s3_conn.create_new_object(content, ...)
+
+	def search(): List[Document]
+	    # Search in S3 buckets and return list of documents
+		doc_list = []
+		for f in results:
+		    # Create a document
+			doc = Document(f.path())
+			doc_list.append(doc)
+		return doc_list
+	...
+#+end_src
+*** ELK
+#+ATTR_REVEAL: :frag t :frag-idx 2
+#+begin_src python
+from domain.entities import Document
+
+class ELKMetricsRepository:
+    """Implements DocumentMetricsRepository """
+	def __init__(self):
+	    # Initiate here connection to ELK stack
+		self.elk_conn = ...
+
+    def send_metrics():
+	    self.elk_conn.send_data(...)
+#+end_src
+
+* Package MAIN
+Here is where *everything* comes together.
+#+ATTR_REVEAL: :frag t :frag-idx 2
+#+begin_src python
+package main
+
+def main():
+        # Create new S3 storage repository
+        s3_repo = repositories.S3StorageRepository()
+
+        # Create new ELK metrics repository
+        elk_repo = repositories.ELKMetricsRepository()
+
+        # Create new upload service
+        upload_service = services.UploadDocumentService(s3_repo, elk_repo)
+
+        # Create new HTTP controller/handler
+        http_server = controller.HTTPController(upload_service)
+        http_server.Start()
+
+if __name__ == "__main__":
+    main()
+
+#+end_src
+* Conclusion
+- the goal is to have *maintainable* code
+- changes on code level should be *easy* and *safe* to make
+- *abstract away* implementations details
+- separate concerns (DDD)
+- also pay attention how you *structure* your code base
+- some words on [[https://realpython.com/lessons/duck-typing/#:~:text=Duck%20typing%20is%20a%20concept,a%20given%20method%20or%20attribute.][duck typing]] (for dynamic programming languages)
+  - you can argue that for e.g. /Python/ you don't need explicit types for parameters
+  - Python (and JS) are duck-typed and give the best flexibility
+	- however, *runtime* errors are sometimes hard to spot
+  - static typed languages (C/C++, TS, Golang, Java, Scala etc.) require *compile-time* checks
+	- make you explicitly use the type (nominal-typed languages) as strict dependency
+	  - e.g. /Java/
+	- make sure object/struct has implemented methods (structural-type languages)
+	  - e.g. /Golang/
+* Resources
+- Clean Architecture (and variants)
+  - [[https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html][Clean Architecture (by Uncle Bob)]]
+  - [[https://alistair.cockburn.us/hexagonal-architecture/][The Hexagonal Architecture (by Alistair Cockburn)]]
+  - [[https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/][The Onion Architecture]]
+- Hexagonal Architecture
+  - [[https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/][DDD, Hexagonal, Onion, Clean, CQRS, … How I put it all together]]
+	- great stuff, awesome graphics
+	- make sure you also read his other [[https://herbertograca.com/category/development/series/][posts]]
+- [[https://beyondxscratch.com/2017/08/19/hexagonal-architecture-the-practical-guide-for-a-clean-architecture/][Hexagonal Architecture: The practical guide for clean architecture]]
+- [[https://www.informatik-aktuell.de/entwicklung/methoden/domain-driven-design-im-hexagon.html][Domain-Driven Design (DDD) im Hexagon (german)]]
+  - [[http://www.codingthearchitecture.com/2015/03/08/package_by_component_and_architecturally_aligned_testing.html][Package by component and architecturally-aligned testing]] (how to design your packages/components)
+  - [[https://netflixtechblog.com/ready-for-changes-with-hexagonal-architecture-b315ec967749][Ready for changes with Hexagonal Architecture (netflix tech blog)]]
+- Python
+  - [[https://douwevandermeij.medium.com/hexagonal-architecture-in-python-7468c2606b63][Hexagonal Architecture in Python]]
+  - [[https://www.bustawin.com/big-sheets/][Big Sheets – Domain Driven Design with a hexagonal architecture]]
+  - [[https://github.com/serfer2/flask-hexagonal-architecture-api][Simple example of Python Flask API following SOLID and Hexagonal Architecture principles]]
+* Setup                                                                         :noexport:
+# Local variables:
+# after-save-hook: org-re-reveal-export-to-html
+# end:
