@@ -6,28 +6,31 @@
 
 #+SETUPFILE: reveal.setup
 #+EXPORT_FILE_NAME: ../public/2022/hexagonal-architecture/index.html
-#+REVEAL_THEME: /themes/css/reveal-code-relax.css
+#+REVEAL_THEME: /themes/css/reveal-code-layers-multicolor.css
 
 * Introduction
-** Big Picture
-#+REVEAL_HTML: <div class="column" style="width: 80%; align: center;">
+TODO: Write introductionary description why
+- Secure by Design
+- Shift Left
+- Clean/Clear Architecture == Better Security
+** Hexagonal Architecture in a nutshell
+#+REVEAL_HTML: <div class="column" style="width: 90%; margin: 0 auto; ">
 [[./images/hexagonal-architecture/hex-infra.png]]
 #+REVEAL_HTML: </div>
+-- TODO: Missing Source
 ** Ports & Adapters
-#+REVEAL_HTML: <div class="column" style="width: 80%; align-center">
+#+REVEAL_HTML: <div class="column" style="width: 90%; margin: 0 auto;">
 [[./images/hexagonal-architecture/ports-adapters.png]]
 #+REVEAL_HTML: </div>
-
 -- [[https://threedots.tech/post/introducing-clean-architecture/][Source]]
-
 *** Ports
-- A port is an input to your application and the only way the *external* world can reach it
+- A *port* is an input to your application and the only way the *external* world can reach it
 - Examples:
   - HTTP/gRPC ~servers~ handling requests from outside to your business application
   - CLI commands doing something with your business use cases
   - Pub/Sub message subscribers
 *** Adapters
-- Adapters are sth that talk to the outside world
+- Adapters are something that talk to the outside world
 - you have to *adapt* your internal data structures to what it's expected outside
 - Examples
   - SQL queries
@@ -49,6 +52,22 @@
 :reveal_background: ./images/100-explicit-architecture-svg.png
 :reveal_background_trans: slide
 :END:
+- I'll describe *use cases* for a concrete problem
+- There are several *actors* involved
+  - /uploader/
+  - /product manager/
+#+begin_src plantuml :file ./images/hexagonal-architecture/use-case.png  :results file replace :cmdline -charset UTF-8 :exports none
+@startuml
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: Another authentication Response
+@enduml
+#+end_src
+
+[[file:./images/hexagonal-architecture/use-case.png]]
+
 *** Uploader: use case description
 #+begin_quote
 As an uploader I'd like to upload documents to some infrastructure. After successful upload I'd like to get a link I can share with my friends.
@@ -75,7 +94,7 @@ Also easy! Again some observations:
 - post-pone decision about concrete implementation details / concrete technologies
 - focus on business cases and use abstractions whenever possible
 - separate concerns
-  - use *SOLID*
+  - use *SOLID* [fn:solid]
 	- you can apply this on different levels
 	  - structures
 	  - namespaces
@@ -83,11 +102,13 @@ Also easy! Again some observations:
 	  - packages
 	  - microservices
 	- just keep *related* things within a boundary (in DDD language: boundary context)
-* PlantUML
-#+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch.png  :results file replace :cmdline -charset UTF-8 :exports results
+
+[fn:solid]: https://brainfck.org/t/solid
+* Software Architecture: High-Level
+#+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch.png  :results file replace :cmdline -charset UTF-8 :exports none
 @startuml
 
-package "" as app_core {
+package "Business Domain ❶" as app_core {
     package "Entities" {
        entity Document {
          string file_path
@@ -116,7 +137,7 @@ package "" as app_core {
 	}
 }
 
-package "Primary/Driving Adapters" as prim_adapters {
+package "Primary/Driving Adapters ❷" as prim_adapters {
     class HTTPServer {
 	 + run ()
 	 + stop()
@@ -127,7 +148,7 @@ package "Primary/Driving Adapters" as prim_adapters {
 	}
 }
 
-package "Secondary/Driven Adapters" as sec_adapters {
+package "Secondary/Driven Adapters ❸" as sec_adapters {
     class S3StorageRepository {
 	     + save(Document)
 		 + search(): List[Document]
@@ -143,7 +164,6 @@ package "Secondary/Driven Adapters" as sec_adapters {
     class ELKMetricsRepository {
 		 + send_metrics()
 	}
-
 
 }
 
@@ -170,27 +190,100 @@ CLICommand --> DocumentUploadService: uses
 #+RESULTS:
 [[file:./images/hexagonal-architecture/example-hex-arch.png]]
 
+#+REVEAL_HTML: <div class="column" style="height: 400px; margin: 0 auto; ">
+[[./images/hexagonal-architecture/example-hex-arch.png]]
+#+REVEAL_HTML: </div>
+** Software Architecture: High-Level (explanations)
+TODO: Change font size!
+- The /Business Domain/ ❶ contains
+  - /Entities/ (there is only ~Document~)
+  - /Services/ (~DocumentUploadService~)
+  - /Repositories/ (~DocumentStorageRepository~ and ~DocumentMetricsRepository~) which are basically interfaces to be implemented by the /Secondary Adapters/ ❸
+- The /Secondary (Driven) Adapters/ implement the repositories/interfaces defined in the /Business Domain/ ❶
+- The /Primary (Driving) Adapters/ ❷ use the /Services/
+  - a CLI could implement the ~DocumentUploadService~ for the terminal
+  - a HTTP server could serve the ~DocumentUploadService~ via HTTP
+
+
 * Domain
-- everything related to the business case
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+- everything related to the *business case*
   - uploader wants to upload some document
   - PM wants to have some metrics
-** Entities
-#+begin_src python
+- contains
+  - /Entities/
+  - /Services/
+  - /Repositories/Interfaces/
+#+REVEAL_HTML: </div>
 
-class Document ():
+#+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch-domain.png  :results file replace :cmdline -charset UTF-8 :exports none
+@startuml
+
+package "Business Domain ❶" as app_core {
+    package "Entities" {
+       entity Document {
+         string file_path
+         + meta(): String
+       }
+    }
+
+    package Services {
+       class DocumentUploadService {
+         - storageRepository: DocumentStorageRepository
+         + uploadDocument(file: Document)
+       }
+    }
+
+	package Repositories {
+       interface DocumentStorageRepository {
+	     + save(Document)
+		 + search(): List[Document]
+		 + delete(Document)
+	   }
+
+       interface DocumentMetricsRepository {
+		 + send_metrics()
+	   }
+
+	}
+}
+
+
+
+DocumentUploadService --> DocumentStorageRepository: uses
+DocumentUploadService --> DocumentMetricsRepository: uses
+DocumentUploadService --> Document: uses
+@enduml
+#+end_src
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
+[[./images/hexagonal-architecture/example-hex-arch-domain.png]]
+#+REVEAL_HTML: </div>
+
+** Entities
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+#+begin_src python
+class Document ():                        ❶
 	"""A document is an entity"""
 	def __init__(self, path: FilePath):
-		self._file_path = path
+		self._file_path = path            ❷
 
 	def meta(self):
 		"""Display meta information about the file"""
 		print("Some information")
 #+end_src
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
+- We only have ~Document~ ❶ as an *entity*
+- The constructor will set an instance variable ❷ for storing the file path
+#+REVEAL_HTML: </div>
+
 ** Services
 *** UploadDocumentService
-#+ATTR_REVEAL: :frag t :frag-idx 2
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
 #+begin_src python
-class UploadDocumentService:
+class UploadDocumentService:           ❶
 	"""Upload a document to storage repository"""
 
 	def __init__(
@@ -201,11 +294,79 @@ class UploadDocumentService:
 		self._storage_repo: DocumentStorageRepository
 		self._metrics_repo: DocumentMetricsRepository
 
-	def upload_document(self, document: Document):
+	def upload_document(self, document: Document):   ❷
 		self._storage_repository(document)
 		self._metrics_repo.send_metrics()
 #+end_src
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
+- We have an ~UploadDocumentService~  ❶
+- this service implements ~upload_document(document: Document)~ ❷
+ #+REVEAL_HTML: </div>
+
 * Repositories
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+The repositories are basically /interfaces/ for the /secondary (driven) adapters/. In our case we have:
+- a repository for dealing with document *storage*
+  - define how to ~save~ documents
+  - define how to ~search~ for documents
+  - define how to ~delete~ a document
+- a repository for dealing with *metrics*
+#+REVEAL_HTML: </div>
+
+#+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch-repos.png  :results file replace :cmdline -charset UTF-8 :exports none
+@startuml
+
+package "Business Domain ❶" as app_core {
+	package Repositories {
+	   interface DocumentStorageRepository {
+		 + save(Document)
+		 + search(): List[Document]
+		 + delete(Document)
+	   }
+
+		interface DocumentMetricsRepository {
+			 + send_metrics()
+		}
+	}
+}
+
+package "Secondary/Driven Adapters ❸" as sec_adapters {
+    class S3StorageRepository {
+	     + save(Document)
+		 + search(): List[Document]
+		 + delete(Document)
+	}
+
+    class DropboxStorageRepository {
+	     + save(Document)
+		 + search(): List[Document]
+		 + delete(Document)
+	}
+
+    class ELKMetricsRepository {
+		 + send_metrics()
+	}
+
+}
+
+sec_adapters -down[hidden]- app_core
+
+S3StorageRepository -right-> DocumentStorageRepository: implements
+DropboxStorageRepository -right-> DocumentStorageRepository: implements
+ELKMetricsRepository -right-> DocumentMetricsRepository: implements
+
+S3StorageRepository -up-> AWS_S3: calls
+DropboxStorageRepository -up-> Dropbox: calls
+ELKMetricsRepository -up-> ELK: calls
+@enduml
+#+end_src
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
+[[./images/hexagonal-architecture/example-hex-arch-repos.png]]
+#+REVEAL_HTML: </div>
+
 ** Storage
 #+ATTR_REVEAL: :frag t :frag-idx 2
 #+begin_src python
