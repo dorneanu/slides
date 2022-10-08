@@ -8,6 +8,7 @@
 #+EXPORT_FILE_NAME: ../public/2022/hexagonal-architecture/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-layers-multicolor.css
 
+
 * Introduction
 Why should you chose hexagonal architecture?
 - clean architecture helps with Secure by Design™
@@ -19,7 +20,6 @@ Why should you chose hexagonal architecture?
   - decouple ({{{zk_book(building-microservices-2nd-edition/#cohesion,Cohesion)}}} vs {{{zk_book(building-microservices-2nd-edition/#coupling,Coupling)}}}) business code from /technology code/
   - business should still grow without any hard dependencies on technological challenges
   - improve {{{zk_book(accelerate/#software-delivery-performance,software delivery performance)}}}
-- Clean/Clear Architecture == Better Security
 ** Hexagonal Architecture in a nutshell
 #+REVEAL_HTML: <div class="column" style="width: 90%; margin: 0 auto; ">
 [[./images/hexagonal-architecture/hex-infra.png]]
@@ -574,6 +574,13 @@ if __name__ == "__main__":
   - [[https://douwevandermeij.medium.com/hexagonal-architecture-in-python-7468c2606b63][Hexagonal Architecture in Python]]
   - [[https://www.bustawin.com/big-sheets/][Big Sheets – Domain Driven Design with a hexagonal architecture]]
   - [[https://github.com/serfer2/flask-hexagonal-architecture-api][Simple example of Python Flask API following SOLID and Hexagonal Architecture principles]]
+* Contact
+- About ::  [[https://dornea.nu][dornea.nu]]
+- Blog :: [[https://blog.dornea.nu][blog.dornea.nu]]
+- Github :: [[https://github.com/dorneanu][github.com/dorneanu]]
+- Twitter :: [[https://twitter.com/victordorneanu][@victordorneanu]]
+- LinkedIn :: [[https://www.linkedin.com/in/victor-dorneanu-4bba23101][linkedin.com/in/victor-dorneanu]]
+- Threema :: [[https://threema.id/HCPNAFRD][HCPNAFRD]]
 * Setup                                                                         :noexport:
 # Local variables:
 # after-save-hook: org-re-reveal-export-to-html

@@ -106,4 +106,7 @@ menu: {
         { name: '########## dark ##########', theme: 'themes/css/reveal-zenika-dark.css' },
 		{ name: 'security-dark', theme: 'themes/css/reveal-security-dark.css' },
 		{ name: 'containers-dark', theme: 'themes/css/reveal-containers-dark.css' }]
-}
+},
+navigationMode: "linear",
+hash: true,
+slideNumber: "c/t"
