@@ -30,11 +30,27 @@
 <section id="slide-1">
 <h2 id="1"><span class="section-number-2">1.</span> Introduction</h2>
 <p>
-TODO: Write introductionary description why<br />
+Why should you chose hexagonal architecture?<br />
 </p>
 <ul>
-<li>Secure by Design<br /></li>
-<li>Shift Left<br /></li>
+<li>clean architecture helps with Secure by Design™<br />
+<ul>
+<li>adopt &ldquo;<b>shift left</b>&rdquo; mentality and guarantee (application) Security<br /></li>
+<li>add Security to the early stages of the <b>SDLC</b><br /></li>
+
+</ul></li>
+<li>clear <b>separation</b> of concerns (fundamental in <a href="https://brainfck.org/t/information-hiding">Information hiding</a>)<br />
+<ul>
+<li>hide details behind a <a href="https://brainfck.org/t/ddd#bounded-context">boundary</a><br /></li>
+
+</ul></li>
+<li>help with <b>technical debt</b><br />
+<ul>
+<li>decouple (<a href="https://brainfck.org/book/building-microservices-2nd-edition/#cohesion">Cohesion</a> vs <a href="https://brainfck.org/book/building-microservices-2nd-edition/#coupling">Coupling</a>) business code from <i>technology code</i><br /></li>
+<li>business should still grow without any hard dependencies on technological challenges<br /></li>
+<li>improve <a href="https://brainfck.org/book/accelerate/#software-delivery-performance">software delivery performance</a><br /></li>
+
+</ul></li>
 <li>Clean/Clear Architecture == Better Security<br /></li>
 
 </ul>
@@ -43,7 +59,7 @@ TODO: Write introductionary description why<br />
 <h3 id="1-1"><span class="section-number-3">1.1.</span> Hexagonal Architecture in a nutshell</h3>
 <div class="column" style="width: 90%; margin: 0 auto; ">
 
-<div id="org285003a" class="figure">
+<div id="org0b5a342" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAk4AAAFNCAYAAAD2JeDGAAAgAElEQVR4AezdCfx9/1Qv/vW//3tv
 3SYNhiYkMmQISRooQ4hQMjQhDUqIQsqQFJEkMlRoVJmJRjKUMlRCpJCSlNJwi6bbHf73/3j6vVfe
 9u+c8znnfPY5Z+9z1no8znd/vmfY+/1+vfd+v9d7rddaK6KkECgECoFCoBAoBAqBQqAQKAQKgUKg
@@ -693,11 +709,28 @@ EAgCQSAIBIEgEASCQBAIAkEgCASBILBfBP4L1EzAaHqEmjgAAAAASUVORK5CYII="><br />
 &#x2013; TODO: Missing Source<br />
 </p>
 </section>
+<section id="slide-1-1-1">
+<h4 id="1-1-1"><span class="section-number-4">1.1.1.</span> It&rsquo;s all about business logic</h4>
+<ul>
+<li>explicit <b>separation</b> between what code is <b>internal</b> to the application and what is <b>external</b><br /></li>
+
+</ul>
+<div class="quoteblock">
+<blockquote>
+<p>
+The idea of Hexagonal Architecture is to put inputs and outputs at the edges of our design. Business logic should not depend on whether we expose a REST or a GraphQL API, and it should not depend on where we get data from &#x2014; a database, a microservice API exposed via gRPC or REST, or just a simple CSV file.<br />
+&#x2013; <a href="https://netflixtechblog.com/ready-for-changes-with-hexagonal-architecture-b315ec967749">Ready for changes with hexagonal architecture | netflix blog</a><br />
+</p>
+</blockquote>
+</div>
+
+
+</section>
 <section id="slide-1-2">
 <h3 id="1-2"><span class="section-number-3">1.2.</span> Ports &amp; Adapters</h3>
-<div class="column" style="width: 90%; margin: 0 auto;">
+<div class="" style="width: 90%; margin: 0 auto;">
 
-<div id="orga3fd49e" class="figure">
+<div id="orgb19a36f" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwoAAAGPCAYAAAD82idjAAAgAElEQVR4AeydB3gUV5a2vTuzM568
 k9NO8D9pd3bWnnGO5BxsggNgGxsTRc7BgE3GBoOxDbYxGNsYhIRIIiNAQijnnIWyUM45fv9zbndJ
 pVJ1kDp3n34e6K5069Zbpe766rvnnHvALybABJgAE2ACTIAJMAEmwASYgILAPYppnmQCTIAJMAEm
@@ -1807,7 +1840,7 @@ PTQ8IuW7mmR0tHDm3dB4RI6d6C6odT7R3iuNB46FYs7/D4N6UVdgba67AAAAAElFTkSuQmCC"><br />
 
 </ul>
 
-<div id="orgdebb057" class="figure">
+<div id="orgfcae122" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASMAAADPCAIAAAAxsyA3AAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAEIaVRYdHBsYW50dW1sAAEAAAB4nIWPS0vD
 QBSF9wP5D3fZLlJMDMUGkT4VYoOlSbufJtc4kNyp8wj4772pFBcqbud8851z59ZJ43zXBmLRqgoh
@@ -1982,7 +2015,7 @@ Also easy! Again some observations:<br />
 <li>focus on business cases and use abstractions whenever possible<br /></li>
 <li>separate concerns<br />
 <ul>
-<li>use <b>SOLID</b> <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup><br />
+<li>use <a href="https://brainfck.org/t/solid">SOLID</a><br />
 <ul>
 <li>you can apply this on different levels<br />
 <ul>
@@ -1990,16 +2023,18 @@ Also easy! Again some observations:<br />
 <li>namespaces<br /></li>
 <li>modules<br /></li>
 <li>packages<br /></li>
-<li>microservices<br /></li>
+<li><a href="https://brainfck.org/t/microservices">microservices</a><br /></li>
+<li>just keep <b>related</b> things within a boundary (in <a href="https://brainfck.org/t/ddd">DDD</a> language:<br />
+<a href="https://brainfck.org/t/ddd#bounded-context">boundary context</a>)<br /></li>
 
 </ul></li>
-<li>just keep <b>related</b> things within a boundary (in DDD language: boundary context)<br /></li>
 
 </ul></li>
 
 </ul></li>
 
 </ul>
+
 </section>
 </section>
 <section>
@@ -2007,7 +2042,7 @@ Also easy! Again some observations:<br />
 <h2 id="2"><span class="section-number-2">2.</span> Software Architecture: High-Level</h2>
 <div class="column" style="height: 400px; margin: 0 auto; ">
 
-<div id="org7aba20b" class="figure">
+<div id="org45a0dd5" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABawAAAMFCAIAAAAX/yZ2AAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAK0aVRYdHBsYW50dW1sAAEAAAB4nMVV3U7b
 MBS+rqW8g8VVKxQ2SoVGLiag7X5Kq1WksAuEKpMcWmuJbfmnA008yl5j2/PsSWYnTUggZXCz+SKy
@@ -3706,7 +3741,7 @@ TODO: Change font size!<br />
 
 <div class="column" style="float:right; width: 50%; font-size: 13px;">
 
-<div id="orga8748f3" class="figure">
+<div id="org84aba2a" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAvwAAAGYCAIAAACxt6EJAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAHRaVRYdHBsYW50dW1sAAEAAAB4nI1T22rj
 MBB9tiD/MOTJYXHZZEPZ+qGUNtlCmtBSJ31ZStDak1SsLRldDGXpp/Q3+kH9ko6cOHW6KVQGM+jM
@@ -4401,7 +4436,7 @@ The repositories are basically <i>interfaces</i> for the <i>secondary (driven) a
 
 <div class="column" style="float:right; width: 50%; font-size: 13px;">
 
-<div id="org0fddd21" class="figure">
+<div id="org6c37dcb" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAv8AAAJQCAIAAACW05xOAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAH9aVRYdHBsYW50dW1sAAEAAAB4nMVU22rb
 QBB99oL/YciTTVBaXwiNHkoucguOTENkpw8hmM1qYi+VdsVenIaST+lvhH5Pv6QjJXJwLRcKhT5I
@@ -5411,7 +5446,7 @@ if __name__ == "__main__":
 <li>the goal is to have <b>maintainable</b> code<br /></li>
 <li>changes on code level should be <b>easy</b> and <b>safe</b> to make<br /></li>
 <li><b>abstract away</b> implementations details<br /></li>
-<li>separate concerns (DDD)<br /></li>
+<li>separate concerns (<a href="https://brainfck.org/t/ddd">DDD</a>)<br /></li>
 <li>also pay attention how you <b>structure</b> your code base<br /></li>
 <li>some words on <a href="https://realpython.com/lessons/duck-typing/#:~:text=Duck%20typing%20is%20a%20concept,a%20given%20method%20or%20attribute.">duck typing</a> (for dynamic programming languages)<br />
 <ul>
@@ -5421,7 +5456,7 @@ if __name__ == "__main__":
 <li>however, <b>runtime</b> errors are sometimes hard to spot<br /></li>
 
 </ul></li>
-<li>static typed languages (C/C++, TS, Golang, Java, Scala etc.) require <b>compile-time</b> checks<br />
+<li>static typed languages (C/C++, TS, <a href="https://brainfck.org/t/golang">Golang</a>, Java, Scala etc.) require <b>compile-time</b> checks<br />
 <ul>
 <li>make you explicitly use the type (nominal-typed languages) as strict dependency<br />
 <ul>
@@ -5430,7 +5465,7 @@ if __name__ == "__main__":
 </ul></li>
 <li>make sure object/struct has implemented methods (structural-type languages)<br />
 <ul>
-<li>e.g. <i>Golang</i><br /></li>
+<li>e.g. <a href="https://brainfck.org/t/golang">Golang</a><br /></li>
 
 </ul></li>
 

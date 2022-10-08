@@ -9,17 +9,34 @@
 #+REVEAL_THEME: /themes/css/reveal-code-layers-multicolor.css
 
 * Introduction
-TODO: Write introductionary description why
-- Secure by Design
-- Shift Left
+Why should you chose hexagonal architecture?
+- clean architecture helps with Secure by Design™
+  - adopt "*shift left*" mentality and guarantee (application) Security
+  - add Security to the early stages of the *SDLC*
+- clear *separation* of concerns (fundamental in {{{zk_topic(information-hiding,Information hiding)}}})
+  - hide details behind a {{{zk_topic(ddd#bounded-context,boundary)}}}
+- help with *technical debt*
+  - decouple ({{{zk_book(building-microservices-2nd-edition/#cohesion,Cohesion)}}} vs {{{zk_book(building-microservices-2nd-edition/#coupling,Coupling)}}}) business code from /technology code/
+  - business should still grow without any hard dependencies on technological challenges
+  - improve {{{zk_book(accelerate/#software-delivery-performance,software delivery performance)}}}
 - Clean/Clear Architecture == Better Security
 ** Hexagonal Architecture in a nutshell
 #+REVEAL_HTML: <div class="column" style="width: 90%; margin: 0 auto; ">
 [[./images/hexagonal-architecture/hex-infra.png]]
 #+REVEAL_HTML: </div>
 -- TODO: Missing Source
+*** It's all about business logic
+- explicit *separation* between what code is *internal* to the application and what is *external*
+#+REVEAL_HTML: <div class="quoteblock">
+#+begin_quote
+The idea of Hexagonal Architecture is to put inputs and outputs at the edges of our design. Business logic should not depend on whether we expose a REST or a GraphQL API, and it should not depend on where we get data from --- a database, a microservice API exposed via gRPC or REST, or just a simple CSV file.
+-- [[https://netflixtechblog.com/ready-for-changes-with-hexagonal-architecture-b315ec967749][Ready for changes with hexagonal architecture | netflix blog]]
+#+end_quote
+#+REVEAL_HTML: </div>
+
+
 ** Ports & Adapters
-#+REVEAL_HTML: <div class="column" style="width: 90%; margin: 0 auto;">
+#+REVEAL_HTML: <div class="" style="width: 90%; margin: 0 auto;">
 [[./images/hexagonal-architecture/ports-adapters.png]]
 #+REVEAL_HTML: </div>
 -- [[https://threedots.tech/post/introducing-clean-architecture/][Source]]
@@ -94,16 +111,16 @@ Also easy! Again some observations:
 - post-pone decision about concrete implementation details / concrete technologies
 - focus on business cases and use abstractions whenever possible
 - separate concerns
-  - use *SOLID* [fn:solid]
+  - use {{{zk_topic(solid,SOLID)}}}
 	- you can apply this on different levels
 	  - structures
 	  - namespaces
 	  - modules
 	  - packages
-	  - microservices
-	- just keep *related* things within a boundary (in DDD language: boundary context)
+	  - {{{zk_topic(microservices,microservices)}}}
+	  - just keep *related* things within a boundary (in {{{zk_topic(ddd,DDD)}}} language:
+        {{{zk_topic(ddd#bounded-context,boundary context)}}})
 
-[fn:solid]: https://brainfck.org/t/solid
 * Software Architecture: High-Level
 #+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch.png  :results file replace :cmdline -charset UTF-8 :exports none
 @startuml
@@ -529,17 +546,17 @@ if __name__ == "__main__":
 - the goal is to have *maintainable* code
 - changes on code level should be *easy* and *safe* to make
 - *abstract away* implementations details
-- separate concerns (DDD)
+- separate concerns ({{{zk_topic(ddd,DDD)}}})
 - also pay attention how you *structure* your code base
 - some words on [[https://realpython.com/lessons/duck-typing/#:~:text=Duck%20typing%20is%20a%20concept,a%20given%20method%20or%20attribute.][duck typing]] (for dynamic programming languages)
   - you can argue that for e.g. /Python/ you don't need explicit types for parameters
   - Python (and JS) are duck-typed and give the best flexibility
 	- however, *runtime* errors are sometimes hard to spot
-  - static typed languages (C/C++, TS, Golang, Java, Scala etc.) require *compile-time* checks
+  - static typed languages (C/C++, TS, {{{zk_topic(golang,Golang)}}}, Java, Scala etc.) require *compile-time* checks
 	- make you explicitly use the type (nominal-typed languages) as strict dependency
 	  - e.g. /Java/
 	- make sure object/struct has implemented methods (structural-type languages)
-	  - e.g. /Golang/
+	  - e.g. {{{zk_topic(golang,Golang)}}}
 * Resources
 - Clean Architecture (and variants)
   - [[https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html][Clean Architecture (by Uncle Bob)]]
