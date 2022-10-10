@@ -7,7 +7,7 @@
 #+SETUPFILE: reveal.setup
 #+EXPORT_FILE_NAME: ../public/2022/hexagonal-architecture/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-layers-multicolor.css
-
+##+REVEAL_EXTRA_SCRIPTS: ('<script>for(let e of document.getElementsByClassName("figure-number")){e.parentElement.classList.add("fig-caption");}</script>')
 
 * Introduction
 Why should you chose hexagonal architecture?
@@ -58,12 +58,12 @@ The idea of Hexagonal Architecture is to put inputs and outputs at the edges of 
   - *secondary/driven* adapters
 *** Application logic/core
 - a layer that glues together other layers
-- also known as the place where "use cases" live at
+- also known as the place where "*use cases*" live at
 - this is what *our code* is supposed to do (it's the *main* application)
-- the application logic depends only on own domain entities
-  - if you cannot say which database is used for storing entities, that's a good sign
-  - if you cannot say which URLs it calls for doing authentication, that's a good sign
-  - in general: this layer is "free" of any concrete implementation details
+- the application logic depends only on own /domain/ entities
+  - if you cannot say which database is used for storing entities, that's a /good/ sign
+  - if you cannot say which URLs it calls for doing authentication, that's a /good/ sign
+  - in general: this layer is "free" of any /concrete/ implementation details
 ** Language-agnostic implementation
 :PROPERTIES:
 :reveal_background: ./images/100-explicit-architecture-svg.png
@@ -109,8 +109,9 @@ Also easy! Again some observations:
   - Using the CLI?
 *** Use abstractions
 - post-pone decision about concrete implementation details / concrete technologies
-- focus on business cases and use abstractions whenever possible
+- focus on business cases and use abstractions (aka /interfaces/) whenever possible
 - separate concerns
+  - apply {{{zk_topic(information-hiding,information hiding)}}}
   - use {{{zk_topic(solid,SOLID)}}}
 	- you can apply this on different levels
 	  - structures
@@ -118,8 +119,8 @@ Also easy! Again some observations:
 	  - modules
 	  - packages
 	  - {{{zk_topic(microservices,microservices)}}}
-	  - just keep *related* things within a boundary (in {{{zk_topic(ddd,DDD)}}} language:
-        {{{zk_topic(ddd#bounded-context,boundary context)}}})
+	  - just keep *related* things within a boundary
+		- in {{{zk_topic(ddd,DDD)}}} language: {{{zk_topic(ddd#bounded-context,boundary context)}}}
 
 * Software Architecture: High-Level
 #+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch.png  :results file replace :cmdline -charset UTF-8 :exports none
@@ -236,7 +237,7 @@ TODO: Change font size!
 #+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch-domain.png  :results file replace :cmdline -charset UTF-8 :exports none
 @startuml
 
-package "Business Domain ❶" as app_core {
+package "Business Domain ❶" as app_core <<Node>> {
     package "Entities" {
        entity Document {
          string file_path
@@ -274,7 +275,8 @@ DocumentUploadService --> Document: uses
 #+end_src
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
-[[./images/hexagonal-architecture/example-hex-arch-domain.png]]
+#+CAPTION: alles klar
+[[file:images/hexagonal-architecture/example-hex-arch-domain.png]]
 #+REVEAL_HTML: </div>
 
 ** Entities
@@ -292,13 +294,19 @@ class Document ():                        ❶
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
+#+ATTR_REVEAL: :frag t :frag_idx 2
 - We only have ~Document~ ❶ as an *entity*
 - The constructor will set an instance variable ❷ for storing the file path
 #+REVEAL_HTML: </div>
 
 ** Services
 *** UploadDocumentService
+:PROPERTIES:
+:REVEAL_EXTRA_ATTR: data-auto-animate
+:END:
+
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+#+ATTR_REVEAL: :data_id foo
 #+begin_src python
 class UploadDocumentService:           ❶
 	"""Upload a document to storage repository"""
@@ -318,6 +326,7 @@ class UploadDocumentService:           ❶
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
+#+ATTR_REVEAL: :frag t :frag_idx 2
 - We have an ~UploadDocumentService~  ❶
 - this service implements ~upload_document(document: Document)~ ❷
  #+REVEAL_HTML: </div>
@@ -335,7 +344,13 @@ The repositories are basically /interfaces/ for the /secondary (driven) adapters
 #+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch-repos.png  :results file replace :cmdline -charset UTF-8 :exports none
 @startuml
 
-package "Business Domain ❶" as app_core {
+package "3rd-party Libraries" as 3rd_party <<Node>> {
+    class AWS_S3 {}
+    class Dropbox {}
+    class ELK {}
+}
+
+package "Business Domain ❶" as app_core <<Node>> {
 	package Repositories {
 	   interface DocumentStorageRepository {
 		 + save(Document)
@@ -349,7 +364,7 @@ package "Business Domain ❶" as app_core {
 	}
 }
 
-package "Secondary/Driven Adapters ❸" as sec_adapters {
+package "Secondary/Driven Adapters ❸" as sec_adapters <<Node>> {
     class S3StorageRepository {
 	     + save(Document)
 		 + search(): List[Document]
@@ -380,8 +395,12 @@ ELKMetricsRepository -up-> ELK: calls
 @enduml
 #+end_src
 
+#+RESULTS:
+[[file:./images/hexagonal-architecture/example-hex-arch-repos.png]]
+
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
-[[./images/hexagonal-architecture/example-hex-arch-repos.png]]
+#+CAPTION: alles klar repos
+[[file:images/hexagonal-architecture/example-hex-arch-repos.png]]
 #+REVEAL_HTML: </div>
 
 ** Storage
