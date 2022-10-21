@@ -1,16 +1,18 @@
 #+TITLE: Hexagonal Architecture
 #+SUBTITLE: Basic introduction using Python
 #+AUTHOR: Victor Dorneanu
-#+DATE: 2022-05
+#+DATE: 2022-10
 #+STARTUP: indent fold
 
 #+SETUPFILE: reveal.setup
 #+EXPORT_FILE_NAME: ../public/2022/hexagonal-architecture/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-layers-multicolor.css
-##+REVEAL_EXTRA_SCRIPTS: ('<script>for(let e of document.getElementsByClassName("figure-number")){e.parentElement.classList.add("fig-caption");}</script>')
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND: https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80
+#+REVEAL_TITLE_SLIDE_BACKGROUND: https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80
+
 
 * Introduction
-Why should you chose hexagonal architecture?
+Why should you chose {{{zk_topic(hexagonal-architecture,hexagonal architecture)}}} ?
 - clean architecture helps with Secure by Design™
   - adopt "*shift left*" mentality and guarantee (application) Security
   - add Security to the early stages of the *SDLC*
@@ -21,10 +23,10 @@ Why should you chose hexagonal architecture?
   - business should still grow without any hard dependencies on technological challenges
   - improve {{{zk_book(accelerate/#software-delivery-performance,software delivery performance)}}}
 ** Hexagonal Architecture in a nutshell
-#+REVEAL_HTML: <div class="column" style="width: 90%; margin: 0 auto; ">
+#+BEGIN_imagecontainer
+#+CAPTION: Source https://yoan-thirion.gitbook.io/knowledge-base/software-craftsmanship/code-katas/clean-architecture#hexagonal-architecture-1
 [[./images/hexagonal-architecture/hex-infra.png]]
-#+REVEAL_HTML: </div>
--- TODO: Missing Source
+#+END_imagecontainer
 *** It's all about business logic
 - explicit *separation* between what code is *internal* to the application and what is *external*
 #+REVEAL_HTML: <div class="quoteblock">
@@ -34,12 +36,11 @@ The idea of Hexagonal Architecture is to put inputs and outputs at the edges of 
 #+end_quote
 #+REVEAL_HTML: </div>
 
-
 ** Ports & Adapters
-#+REVEAL_HTML: <div class="" style="width: 90%; margin: 0 auto;">
+#+BEGIN_imagecontainer
+#+CAPTION: Source: https://threedots.tech/post/introducing-clean-architecture/
 [[./images/hexagonal-architecture/ports-adapters.png]]
-#+REVEAL_HTML: </div>
--- [[https://threedots.tech/post/introducing-clean-architecture/][Source]]
+#+END_imagecontainer
 *** Ports
 - A *port* is an input to your application and the only way the *external* world can reach it
 - Examples:
@@ -65,29 +66,17 @@ The idea of Hexagonal Architecture is to put inputs and outputs at the edges of 
   - if you cannot say which URLs it calls for doing authentication, that's a /good/ sign
   - in general: this layer is "free" of any /concrete/ implementation details
 ** Language-agnostic implementation
-:PROPERTIES:
-:reveal_background: ./images/100-explicit-architecture-svg.png
-:reveal_background_trans: slide
-:END:
 - I'll describe *use cases* for a concrete problem
 - There are several *actors* involved
   - /uploader/
   - /product manager/
-#+begin_src plantuml :file ./images/hexagonal-architecture/use-case.png  :results file replace :cmdline -charset UTF-8 :exports none
-@startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: Another authentication Response
-@enduml
-#+end_src
-
-[[file:./images/hexagonal-architecture/use-case.png]]
-
+- I'll *abstractions* to define relationships between
+  - /use cases/ and
+  - concrete /implementations/
 *** Uploader: use case description
 #+begin_quote
 As an uploader I'd like to upload documents to some infrastructure. After successful upload I'd like to get a link I can share with my friends.
+-- Uploader
 #+end_quote
 
 Easy! Some observations:
@@ -95,10 +84,11 @@ Easy! Some observations:
 - the uploader doesn't mention *how* he/she would like to upload documents
   - via web client?
   - via mobile phone?
-  - via CLI? :)
+  - via CLI?
 *** Product Manager: use case description
 #+begin_quote
 As a product manager I'd like to see how many documents each uploader uploads and how many times he/she shares the link.
+-- Product Manager
 #+end_quote
 
 Also easy! Again some observations:
@@ -113,15 +103,14 @@ Also easy! Again some observations:
 - separate concerns
   - apply {{{zk_topic(information-hiding,information hiding)}}}
   - use {{{zk_topic(solid,SOLID)}}}
-	- you can apply this on different levels
-	  - structures
-	  - namespaces
-	  - modules
-	  - packages
-	  - {{{zk_topic(microservices,microservices)}}}
-	  - just keep *related* things within a boundary
-		- in {{{zk_topic(ddd,DDD)}}} language: {{{zk_topic(ddd#bounded-context,boundary context)}}}
-
+- you can apply this on different levels
+  - structures
+  - namespaces
+  - modules
+  - packages
+  - {{{zk_topic(microservices,microservices)}}}
+  - just keep *related* things within a boundary
+	- in {{{zk_topic(ddd,DDD)}}} language: {{{zk_topic(ddd#bounded-context,boundary context)}}}
 * Software Architecture: High-Level
 #+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch.png  :results file replace :cmdline -charset UTF-8 :exports none
 @startuml
@@ -216,15 +205,16 @@ TODO: Change font size!
 - The /Business Domain/ ❶ contains
   - /Entities/ (there is only ~Document~)
   - /Services/ (~DocumentUploadService~)
-  - /Repositories/ (~DocumentStorageRepository~ and ~DocumentMetricsRepository~) which are basically interfaces to be implemented by the /Secondary Adapters/ ❸
-- The /Secondary (Driven) Adapters/ implement the repositories/interfaces defined in the /Business Domain/ ❶
+  - /Repositories/ (~DocumentStorageRepository~ and ~DocumentMetricsRepository~)
+	- basically interfaces to be implemented by the /Secondary Adapters/ ❸
+- The /Secondary (Driven) Adapters/ implement
+  - the repositories/interfaces defined in the /Business Domain/ ❶
 - The /Primary (Driving) Adapters/ ❷ use the /Services/
   - a CLI could implement the ~DocumentUploadService~ for the terminal
   - a HTTP server could serve the ~DocumentUploadService~ via HTTP
 
-
 * Domain
-#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%;">
 - everything related to the *business case*
   - uploader wants to upload some document
   - PM wants to have some metrics
@@ -274,7 +264,7 @@ DocumentUploadService --> Document: uses
 @enduml
 #+end_src
 
-#+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%; font-size: 13px;">
 #+CAPTION: alles klar
 [[file:images/hexagonal-architecture/example-hex-arch-domain.png]]
 #+REVEAL_HTML: </div>
@@ -329,7 +319,7 @@ class UploadDocumentService:           ❶
 #+ATTR_REVEAL: :frag t :frag_idx 2
 - We have an ~UploadDocumentService~  ❶
 - this service implements ~upload_document(document: Document)~ ❷
- #+REVEAL_HTML: </div>
+#+REVEAL_HTML: </div>
 
 * Repositories
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
@@ -593,6 +583,8 @@ if __name__ == "__main__":
   - [[https://douwevandermeij.medium.com/hexagonal-architecture-in-python-7468c2606b63][Hexagonal Architecture in Python]]
   - [[https://www.bustawin.com/big-sheets/][Big Sheets – Domain Driven Design with a hexagonal architecture]]
   - [[https://github.com/serfer2/flask-hexagonal-architecture-api][Simple example of Python Flask API following SOLID and Hexagonal Architecture principles]]
+- Images
+  - [[https://unsplash.com/photos/oq2WOgySksM][Background image]]
 * Contact
 - About ::  [[https://dornea.nu][dornea.nu]]
 - Blog :: [[https://blog.dornea.nu][blog.dornea.nu]]

@@ -18,6 +18,7 @@
 #+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css"/>
 #+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 #+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/gruvbox-light-medium.min.css" />
+#+REVEAL_EXTRA_CSS: /themes/css/custom.css
 
 # Add JS here
 #+REVEAL_HEAD_PREAMBLE: <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>

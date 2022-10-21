@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
 
 <link rel="stylesheet" href="/themes/css/reveal-code-layers-multicolor.css" id="theme"/>
+
+<link rel="stylesheet" href="/themes/css/custom.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/zenburn.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
@@ -22,18 +24,16 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide">
-<h1>Hexagonal Architecture</h1><h2>Basic introduction using Python</h2><p class="author">2022-05 Victor Dorneanu</p>
+<section id="sec-title-slide" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80">
+<h1>Hexagonal Architecture</h1><h2>Basic introduction using Python</h2><p class="author">2022-10 Victor Dorneanu</p>
 </section>
-<p>
-##+REVEAL<sub>EXTRA</sub><sub>SCRIPTS</sub>: (&rsquo;&lt;script&gt;for(let e of document.getElementsByClassName(&ldquo;figure-number&rdquo;)){e.parentElement.classList.add(&ldquo;fig-caption&rdquo;);}&lt;/script&gt;&rsquo;)<br />
-</p>
+
 
 <section>
-<section id="slide-1">
+<section id="slide-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="1"><span class="section-number-2">1.</span> Introduction</h2>
 <p>
-Why should you chose hexagonal architecture?<br />
+Why should you chose <a href="https://brainfck.org/t/hexagonal-architecture">hexagonal architecture</a> ?<br />
 </p>
 <ul>
 <li>clean architecture helps with Secure by Design™<br />
@@ -57,11 +57,11 @@ Why should you chose hexagonal architecture?<br />
 
 </ul>
 </section>
-<section id="slide-1-1">
+<section id="slide-1-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="1-1"><span class="section-number-3">1.1.</span> Hexagonal Architecture in a nutshell</h3>
-<div class="column" style="width: 90%; margin: 0 auto; ">
+<div class="imagecontainer" id="orgf241de2">
 
-<div id="orgbea2c23" class="figure">
+<div id="org1c5df99" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAk4AAAFNCAYAAAD2JeDGAAAgAElEQVR4AezdCfx9/1Qv/vW//3tv
 3SYNhiYkMmQISRooQ4hQMjQhDUqIQsqQFJEkMlRoVJmJRjKUMlRCpJCSlNJwi6bbHf73/3j6vVfe
 9u+c8znnfPY5Z+9z1no8znd/vmfY+/1+vfd+v9d7rddaK6KkECgECoFCoBAoBAqBQqAQKAQKgUKg
@@ -705,13 +705,12 @@ QSAIBIEgEASCQBAIAkEgCASBIBAEgkAQCAJBIAgEgSAQBIJAEAgCQSAIBIEgEASCQBAIAkEgCASB
 IBAEgkAQCAJBIAgEgSAQBIJAEAgCQSAIBIEgEASCQBAIAkEgCASBIBAEgkAQCAJBIAgEgSAQBIJA
 EAgCQSAIBIEgEASCQBAIAkEgCASBILBfBP4L1EzAaHqEmjgAAAAASUVORK5CYII="><br />
 </p>
+<p><span class="figure-number">Figure 1: </span>Source <a href="https://yoan-thirion.gitbook.io/knowledge-base/software-craftsmanship/code-katas/clean-architecture#hexagonal-architecture-1">https://yoan-thirion.gitbook.io/knowledge-base/software-craftsmanship/code-katas/clean-architecture#hexagonal-architecture-1</a></p>
 </div>
+
 </div>
-<p>
-&#x2013; TODO: Missing Source<br />
-</p>
 </section>
-<section id="slide-1-1-1">
+<section id="slide-1-1-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="1-1-1"><span class="section-number-4">1.1.1.</span> It&rsquo;s all about business logic</h4>
 <ul>
 <li>explicit <b>separation</b> between what code is <b>internal</b> to the application and what is <b>external</b><br /></li>
@@ -726,13 +725,12 @@ The idea of Hexagonal Architecture is to put inputs and outputs at the edges of 
 </blockquote>
 </div>
 
-
 </section>
-<section id="slide-1-2">
+<section id="slide-1-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="1-2"><span class="section-number-3">1.2.</span> Ports &amp; Adapters</h3>
-<div class="" style="width: 90%; margin: 0 auto;">
+<div class="imagecontainer" id="orgfca4333">
 
-<div id="org9fec930" class="figure">
+<div id="org2414b3b" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwoAAAGPCAYAAAD82idjAAAgAElEQVR4AeydB3gUV5a2vTuzM568
 k9NO8D9pd3bWnnGO5BxsggNgGxsTRc7BgE3GBoOxDbYxGNsYhIRIIiNAQijnnIWyUM45fv9zbndJ
 pVJ1kDp3n34e6K5069Zbpe766rvnnHvALybABJgAE2ACTIAJMAEmwASYgILAPYppnmQCTIAJMAEm
@@ -1769,13 +1767,12 @@ EDoCCIXQLQkDggAEIAABCEAAAhCAQPAEEArBrwEjgAAEIAABCEAAAhCAQOgIIBRCtyQMCAIQ8JPA
 2NiYfFfeIENDw342G+q2mlvaRP8V2rGjYq909fQX1LT1/q6qPSDDw5cKat4DZy/IxpIquXRptKDm
 PTQ8IuW7mmR0tHDm3dB4RI6d6C6odT7R3iuNB46FYs7/D4N6UVdgba67AAAAAElFTkSuQmCC"><br />
 </p>
+<p><span class="figure-number">Figure 2: </span>Source: <a href="https://threedots.tech/post/introducing-clean-architecture/">https://threedots.tech/post/introducing-clean-architecture/</a></p>
 </div>
+
 </div>
-<p>
-&#x2013; <a href="https://threedots.tech/post/introducing-clean-architecture/">Source</a><br />
-</p>
 </section>
-<section id="slide-1-2-1">
+<section id="slide-1-2-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="1-2-1"><span class="section-number-4">1.2.1.</span> Ports</h4>
 <ul>
 <li>A <b>port</b> is an input to your application and the only way the <b>external</b> world can reach it<br /></li>
@@ -1789,7 +1786,7 @@ PTQ8IuW7mmR0tHDm3dB4RI6d6C6odT7R3iuNB46FYs7/D4N6UVdgba67AAAAAElFTkSuQmCC"><br />
 
 </ul>
 </section>
-<section id="slide-1-2-2">
+<section id="slide-1-2-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="1-2-2"><span class="section-number-4">1.2.2.</span> Adapters</h4>
 <ul>
 <li>Adapters are something that talk to the outside world<br /></li>
@@ -1813,7 +1810,7 @@ PTQ8IuW7mmR0tHDm3dB4RI6d6C6odT7R3iuNB46FYs7/D4N6UVdgba67AAAAAElFTkSuQmCC"><br />
 
 </ul>
 </section>
-<section id="slide-1-2-3">
+<section id="slide-1-2-3" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="1-2-3"><span class="section-number-4">1.2.3.</span> Application logic/core</h4>
 <ul>
 <li>a layer that glues together other layers<br /></li>
@@ -1829,7 +1826,7 @@ PTQ8IuW7mmR0tHDm3dB4RI6d6C6odT7R3iuNB46FYs7/D4N6UVdgba67AAAAAElFTkSuQmCC"><br />
 
 </ul>
 </section>
-<section id="slide-1-3" data-background="./images/100-explicit-architecture-svg.png" data-background-transition="slide">
+<section id="slide-1-3" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="1-3"><span class="section-number-3">1.3.</span> Language-agnostic implementation</h3>
 <ul>
 <li>I&rsquo;ll describe <b>use cases</b> for a concrete problem<br /></li>
@@ -1839,136 +1836,21 @@ PTQ8IuW7mmR0tHDm3dB4RI6d6C6odT7R3iuNB46FYs7/D4N6UVdgba67AAAAAElFTkSuQmCC"><br />
 <li><i>product manager</i><br /></li>
 
 </ul></li>
+<li>I&rsquo;ll <b>abstractions</b> to define relationships between<br />
+<ul>
+<li><i>use cases</i> and<br /></li>
+<li>concrete <i>implementations</i><br /></li>
+
+</ul></li>
 
 </ul>
-
-<div id="org0cdf88e" class="figure">
-<p><img src="data:image/png;base64,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
-WAAAAABJRU5ErkJggg=="><br />
-</p>
-</div>
-
 </section>
-<section id="slide-1-3-1">
+<section id="slide-1-3-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="1-3-1"><span class="section-number-4">1.3.1.</span> Uploader: use case description</h4>
 <blockquote>
 <p>
 As an uploader I&rsquo;d like to upload documents to some infrastructure. After successful upload I&rsquo;d like to get a link I can share with my friends.<br />
+&#x2013; Uploader<br />
 </p>
 </blockquote>
 
@@ -1981,17 +1863,18 @@ Easy! Some observations:<br />
 <ul>
 <li>via web client?<br /></li>
 <li>via mobile phone?<br /></li>
-<li>via CLI? :)<br /></li>
+<li>via CLI?<br /></li>
 
 </ul></li>
 
 </ul>
 </section>
-<section id="slide-1-3-2">
+<section id="slide-1-3-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="1-3-2"><span class="section-number-4">1.3.2.</span> Product Manager: use case description</h4>
 <blockquote>
 <p>
 As a product manager I&rsquo;d like to see how many documents each uploader uploads and how many times he/she shares the link.<br />
+&#x2013; Product Manager<br />
 </p>
 </blockquote>
 
@@ -2010,7 +1893,7 @@ Also easy! Again some observations:<br />
 
 </ul>
 </section>
-<section id="slide-1-3-3">
+<section id="slide-1-3-3" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="1-3-3"><span class="section-number-4">1.3.3.</span> Use abstractions</h4>
 <ul>
 <li>post-pone decision about concrete implementation details / concrete technologies<br /></li>
@@ -2018,8 +1901,9 @@ Also easy! Again some observations:<br />
 <li>separate concerns<br />
 <ul>
 <li>apply <a href="https://brainfck.org/t/information-hiding">information hiding</a><br /></li>
-<li>use <a href="https://brainfck.org/t/solid">SOLID</a><br />
-<ul>
+<li>use <a href="https://brainfck.org/t/solid">SOLID</a><br /></li>
+
+</ul></li>
 <li>you can apply this on different levels<br />
 <ul>
 <li>structures<br /></li>
@@ -2035,20 +1919,15 @@ Also easy! Again some observations:<br />
 
 </ul></li>
 
-</ul></li>
-
-</ul></li>
-
 </ul>
-
 </section>
 </section>
 <section>
-<section id="slide-2">
+<section id="slide-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="2"><span class="section-number-2">2.</span> Software Architecture: High-Level</h2>
 <div class="column" style="height: 400px; margin: 0 auto; ">
 
-<div id="orgd4bec0b" class="figure">
+<div id="orgad0fab7" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABawAAAMFCAIAAAAX/yZ2AAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAK0aVRYdHBsYW50dW1sAAEAAAB4nMVV3U7b
 MBS+rqW8g8VVKxQ2SoVGLiag7X5Kq1WksAuEKpMcWmuJbfmnA008yl5j2/PsSWYnTUggZXCz+SKy
@@ -3697,7 +3576,7 @@ AABJRU5ErkJggg=="><br />
 </div>
 </div>
 </section>
-<section id="slide-2-1">
+<section id="slide-2-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="2-1"><span class="section-number-3">2.1.</span> Software Architecture: High-Level (explanations)</h3>
 <p>
 TODO: Change font size!<br />
@@ -3707,10 +3586,18 @@ TODO: Change font size!<br />
 <ul>
 <li><i>Entities</i> (there is only <code>Document</code>)<br /></li>
 <li><i>Services</i> (<code>DocumentUploadService</code>)<br /></li>
-<li><i>Repositories</i> (<code>DocumentStorageRepository</code> and <code>DocumentMetricsRepository</code>) which are basically interfaces to be implemented by the <i>Secondary Adapters</i> ❸<br /></li>
+<li><i>Repositories</i> (<code>DocumentStorageRepository</code> and <code>DocumentMetricsRepository</code>)<br />
+<ul>
+<li>basically interfaces to be implemented by the <i>Secondary Adapters</i> ❸<br /></li>
 
 </ul></li>
-<li>The <i>Secondary (Driven) Adapters</i> implement the repositories/interfaces defined in the <i>Business Domain</i> ❶<br /></li>
+
+</ul></li>
+<li>The <i>Secondary (Driven) Adapters</i> implement<br />
+<ul>
+<li>the repositories/interfaces defined in the <i>Business Domain</i> ❶<br /></li>
+
+</ul></li>
 <li>The <i>Primary (Driving) Adapters</i> ❷ use the <i>Services</i><br />
 <ul>
 <li>a CLI could implement the <code>DocumentUploadService</code> for the terminal<br /></li>
@@ -3720,13 +3607,12 @@ TODO: Change font size!<br />
 
 </ul>
 
-
 </section>
 </section>
 <section>
-<section id="slide-3">
+<section id="slide-3" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="3"><span class="section-number-2">3.</span> Domain</h2>
-<div class="column" style="float:left; width: 50%;">
+<div class="column" style="float:left; width: 40%;">
 <ul>
 <li>everything related to the <b>business case</b><br />
 <ul>
@@ -3745,9 +3631,9 @@ TODO: Change font size!<br />
 </ul>
 </div>
 
-<div class="column" style="float:right; width: 50%; font-size: 13px;">
+<div class="column" style="float:right; width: 60%; font-size: 13px;">
 
-<div id="orgc668dff" class="figure">
+<div id="org3a9a287" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAxAAAAGnCAIAAACoyyZOAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAHZaVRYdHBsYW50dW1sAAEAAAB4nI1TbWrb
 QBD9rQXfYfAvmaJQuyY0IpiQ2C24dhMiO39KMVtp7CyVdsV+CELIUXqNHqgnyaxsOXLqQFYghnnz
@@ -4374,12 +4260,12 @@ llr6GYIJAAAAAH4JKRZvqaWfPRNMAAAAAAAtH2+ppZ89EEwAAAAAANcaEEwAAAAAAA0AwQQAAAAA
 AAAADQDBBAAAAADQABBMAAAAAAANAMEEAAAAANAAEEwAAAAAAA0AwQQAAAAA0AD/B600wX33454x
 AAAAAElFTkSuQmCC"><br />
 </p>
-<p><span class="figure-number">Figure 1: </span>alles klar</p>
+<p><span class="figure-number">Figure 3: </span>alles klar</p>
 </div>
 </div>
 
 </section>
-<section id="slide-3-1">
+<section id="slide-3-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="3-1"><span class="section-number-3">3.1.</span> Entities</h3>
 <div class="column" style="float:left; width: 50%;">
 <div class="org-src-container">
@@ -4405,12 +4291,12 @@ AAAAAElFTkSuQmCC"><br />
 </div>
 
 </section>
-<section id="slide-3-2">
+<section id="slide-3-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="3-2"><span class="section-number-3">3.2.</span> Services</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
 </section>
-<section id="slide-3-2-1" data-auto-animate>
+<section id="slide-3-2-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80" data-auto-animate>
 <h4 id="3-2-1"><span class="section-number-4">3.2.1.</span> UploadDocumentService</h4>
 <div class="column" style="float:left; width: 50%;">
 <div class="org-src-container">
@@ -4436,17 +4322,15 @@ AAAAAElFTkSuQmCC"><br />
 <div class="column" style="float:right; width: 50%; font-size: 13px;">
 <ul data-fragment-index="2" class="fragment">
 <li>We have an <code>UploadDocumentService</code>  ❶<br /></li>
-<li><p>
-this service implements <code>upload_document(document: Document)</code> ❷<br />
-</p>
-</div></li>
+<li>this service implements <code>upload_document(document: Document)</code> ❷<br /></li>
 
 </ul>
+</div>
 
 </section>
 </section>
 <section>
-<section id="slide-4">
+<section id="slide-4" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="4"><span class="section-number-2">4.</span> Repositories</h2>
 <div class="column" style="float:left; width: 50%;">
 <p>
@@ -4467,7 +4351,7 @@ The repositories are basically <i>interfaces</i> for the <i>secondary (driven) a
 
 <div class="column" style="float:right; width: 50%; font-size: 13px;">
 
-<div id="orgddd24bb" class="figure">
+<div id="org97c8fd7" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAxMAAAKNCAIAAADUI6GAAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0
 ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAImaVRYdHBsYW50dW1sAAEAAAB4nMVU22rb
 QBB99oL/YciTTVFaXwiNCCYXuwVHbkNkpw8hmLU0sZdKu2J35dSEfEp/o/R7+iUdrSO3juVCoVA9
@@ -5353,12 +5237,12 @@ dMQmPBTJCQCAEOl0xCbEITkBABAinY7YhDh/JjkBAOA3YhPizDk5AQAAFCySEwAAQFIkJwAAgKRI
 TgAAAEmRnAAAAJIiOQEAACRFcgIAAEiK5AQAAJAUyQkAACApkhMAAEBSJCcAAICkSE4AAABJkZwA
 AACSIjkBAAAkRXICAABI6n8HMkjY0okLkgAAAABJRU5ErkJggg=="><br />
 </p>
-<p><span class="figure-number">Figure 2: </span>alles klar repos</p>
+<p><span class="figure-number">Figure 4: </span>alles klar repos</p>
 </div>
 </div>
 
 </section>
-<section id="slide-4-1">
+<section id="slide-4-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="4-1"><span class="section-number-3">4.1.</span> Storage</h3>
 <div class="org-src-container">
 
@@ -5380,7 +5264,7 @@ class DocumentStorageRepository(ABC):
 </code></pre>
 </div>
 </section>
-<section id="slide-4-2">
+<section id="slide-4-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="4-2"><span class="section-number-3">4.2.</span> Metrics</h3>
 <div class="org-src-container">
 
@@ -5397,17 +5281,17 @@ class DocumentMetricsRepository(ABC):
 </section>
 </section>
 <section>
-<section id="slide-5">
+<section id="slide-5" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="5"><span class="section-number-2">5.</span> Adapters</h2>
 <div class="outline-text-2" id="text-5">
 </div>
 </section>
-<section id="slide-5-1">
+<section id="slide-5-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="5-1"><span class="section-number-3">5.1.</span> Primary / driving</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
 </section>
-<section id="slide-5-1-1">
+<section id="slide-5-1-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="5-1-1"><span class="section-number-4">5.1.1.</span> HTTP handler</h4>
 <p>
 The <b>handler</b> only depends on <b>entities</b> and <b>services</b>.<br />
@@ -5435,7 +5319,7 @@ class HTTPController:
 </code></pre>
 </div>
 </section>
-<section id="slide-5-1-2">
+<section id="slide-5-1-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="5-1-2"><span class="section-number-4">5.1.2.</span> CLI handler</h4>
 <p>
 The <b>handler</b> only depends on <b>entities</b> and <b>services</b>.<br />
@@ -5476,12 +5360,12 @@ class CLIController:
 </code></pre>
 </div>
 </section>
-<section id="slide-5-2">
+<section id="slide-5-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h3 id="5-2"><span class="section-number-3">5.2.</span> Secondary / driven</h3>
 <div class="outline-text-3" id="text-5-2">
 </div>
 </section>
-<section id="slide-5-2-1">
+<section id="slide-5-2-1" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="5-2-1"><span class="section-number-4">5.2.1.</span> S3</h4>
 <div class="org-src-container">
 
@@ -5510,7 +5394,7 @@ class S3StorageRepository:
 </code></pre>
 </div>
 </section>
-<section id="slide-5-2-2">
+<section id="slide-5-2-2" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h4 id="5-2-2"><span class="section-number-4">5.2.2.</span> ELK</h4>
 <div class="org-src-container">
 
@@ -5530,7 +5414,7 @@ class ELKMetricsRepository:
 </section>
 </section>
 <section>
-<section id="slide-6">
+<section id="slide-6" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="6"><span class="section-number-2">6.</span> Package MAIN</h2>
 <p>
 Here is where <b>everything</b> comes together.<br />
@@ -5561,7 +5445,7 @@ if __name__ == "__main__":
 </section>
 </section>
 <section>
-<section id="slide-7">
+<section id="slide-7" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="7"><span class="section-number-2">7.</span> Conclusion</h2>
 <ul>
 <li>the goal is to have <b>maintainable</b> code<br /></li>
@@ -5598,7 +5482,7 @@ if __name__ == "__main__":
 </section>
 </section>
 <section>
-<section id="slide-8">
+<section id="slide-8" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="8"><span class="section-number-2">8.</span> Resources</h2>
 <ul>
 <li>Clean Architecture (and variants)<br />
@@ -5632,12 +5516,17 @@ if __name__ == "__main__":
 <li><a href="https://github.com/serfer2/flask-hexagonal-architecture-api">Simple example of Python Flask API following SOLID and Hexagonal Architecture principles</a><br /></li>
 
 </ul></li>
+<li>Images<br />
+<ul>
+<li><a href="https://unsplash.com/photos/oq2WOgySksM">Background image</a><br /></li>
+
+</ul></li>
 
 </ul>
 </section>
 </section>
 <section>
-<section id="slide-9">
+<section id="slide-9" data-background="https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
 <h2 id="9"><span class="section-number-2">9.</span> Contact</h2>
 <dl>
 <dt>About</dt><dd><a href="https://dornea.nu">dornea.nu</a><br /></dd>
