@@ -5,7 +5,8 @@
 #+OPTIONS: num:nil ^:t p:t
 
 * 2022
-** WIP [[./2022/hexagonal-architecture][Hexagonal Architecture]]
+** DONE [[./2022/hexagonal-architecture][Hexagonal Architecture]]
+CLOSED: [2022-10-23 Sun 13:04]
 How to apply ports & adapters architecture in Python.
 ** DONE [[./2022/presentation-as-code/][Presentation as Code]]
 CLOSED: [2022-01-14 Fri]
