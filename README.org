@@ -3,3 +3,5 @@ More description to be added...
 
 * Some small improvements
 ** TODO Add macros for split column view
+** TODO Add CSS for columns
+Inspiration: https://oer.gitlab.io/emacs-reveal-howto/reveal.js/dist/theme/oer-reveal.css

@@ -7,8 +7,8 @@
 #+SETUPFILE: reveal.setup
 #+EXPORT_FILE_NAME: ../public/2022/hexagonal-architecture/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-layers-multicolor.css
-#+REVEAL_DEFAULT_SLIDE_BACKGROUND: https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80
-#+REVEAL_TITLE_SLIDE_BACKGROUND: https://images.unsplash.com/photo-1487603097198-fe76cd44579d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND: https://images.unsplash.com/photo-1659365071822-13d961c215d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80
+#+REVEAL_TITLE_SLIDE_BACKGROUND: https://images.unsplash.com/photo-1659365071822-13d961c215d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80
 
 
 * Introduction
@@ -114,6 +114,7 @@ Also easy! Again some observations:
 * Software Architecture: High-Level
 #+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch.png  :results file replace :cmdline -charset UTF-8 :exports none
 @startuml
+skinparam dpi 250
 
 package "Business Domain ❶" as app_core {
     package "Entities" {
@@ -197,11 +198,15 @@ CLICommand --> DocumentUploadService: uses
 #+RESULTS:
 [[file:./images/hexagonal-architecture/example-hex-arch.png]]
 
-#+REVEAL_HTML: <div class="column" style="height: 400px; margin: 0 auto; ">
+
+#+BEGIN_imagecontainer
+#+REVEAL_HTML: <div class="column" style="width: 95%; margin: 0 auto; ">
+#+CAPTION: Architecture of some imaginary application which uploads some documents to a storage system
 [[./images/hexagonal-architecture/example-hex-arch.png]]
 #+REVEAL_HTML: </div>
+#+END_imagecontainer
+
 ** Software Architecture: High-Level (explanations)
-TODO: Change font size!
 - The /Business Domain/ ❶ contains
   - /Entities/ (there is only ~Document~)
   - /Services/ (~DocumentUploadService~)
@@ -226,6 +231,7 @@ TODO: Change font size!
 
 #+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch-domain.png  :results file replace :cmdline -charset UTF-8 :exports none
 @startuml
+skinparam dpi 300
 
 package "Business Domain ❶" as app_core <<Node>> {
     package "Entities" {
@@ -264,13 +270,16 @@ DocumentUploadService --> Document: uses
 @enduml
 #+end_src
 
-#+REVEAL_HTML: <div class="column" style="float:right; width: 60%; font-size: 13px;">
-#+CAPTION: alles klar
+#+RESULTS:
+[[file:./images/hexagonal-architecture/example-hex-arch-domain.png]]
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%;">
+#+CAPTION: The business domain contains the application login and uses abstractions (interfaces) for defining interactions.
 [[file:images/hexagonal-architecture/example-hex-arch-domain.png]]
 #+REVEAL_HTML: </div>
 
 ** Entities
-#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+#+BEGIN_leftcol50
 #+begin_src python
 class Document ():                        ❶
 	"""A document is an entity"""
@@ -278,16 +287,16 @@ class Document ():                        ❶
 		self._file_path = path            ❷
 
 	def meta(self):
-		"""Display meta information about the file"""
+	"""Display meta information about the file"""
 		print("Some information")
 #+end_src
-#+REVEAL_HTML: </div>
+#+END_leftcol50
 
-#+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
-#+ATTR_REVEAL: :frag t :frag_idx 2
+#+BEGIN_rightcol50
+#+ATTR_REVEAL: :frag t
 - We only have ~Document~ ❶ as an *entity*
 - The constructor will set an instance variable ❷ for storing the file path
-#+REVEAL_HTML: </div>
+#+END_rightcol50
 
 ** Services
 *** UploadDocumentService
@@ -295,7 +304,7 @@ class Document ():                        ❶
 :REVEAL_EXTRA_ATTR: data-auto-animate
 :END:
 
-#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+#+BEGIN_leftcol50
 #+ATTR_REVEAL: :data_id foo
 #+begin_src python
 class UploadDocumentService:           ❶
@@ -313,16 +322,16 @@ class UploadDocumentService:           ❶
 		self._storage_repository(document)
 		self._metrics_repo.send_metrics()
 #+end_src
-#+REVEAL_HTML: </div>
+#+END_leftcol50
 
-#+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
-#+ATTR_REVEAL: :frag t :frag_idx 2
-- We have an ~UploadDocumentService~  ❶
-- this service implements ~upload_document(document: Document)~ ❷
-#+REVEAL_HTML: </div>
+#+ATTR_REVEAL: :frag t
+#+BEGIN_rightcol50
+- ❶ We have an ~UploadDocumentService~
+- ❷ this service implements ~upload_document(document: Document)~
+#+END_rightcol50
 
 * Repositories
-#+REVEAL_HTML: <div class="column" style="float:left; width: 50%;">
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%;">
 The repositories are basically /interfaces/ for the /secondary (driven) adapters/. In our case we have:
 - a repository for dealing with document *storage*
   - define how to ~save~ documents
@@ -333,6 +342,7 @@ The repositories are basically /interfaces/ for the /secondary (driven) adapters
 
 #+begin_src plantuml :file ./images/hexagonal-architecture/example-hex-arch-repos.png  :results file replace :cmdline -charset UTF-8 :exports none
 @startuml
+skinparam dpi 300
 
 package "3rd-party Libraries" as 3rd_party <<Node>> {
     class AWS_S3 {}
@@ -388,17 +398,17 @@ ELKMetricsRepository -up-> ELK: calls
 #+RESULTS:
 [[file:./images/hexagonal-architecture/example-hex-arch-repos.png]]
 
-#+REVEAL_HTML: <div class="column" style="float:right; width: 50%; font-size: 13px;">
-#+CAPTION: alles klar repos
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%;">
+#+CAPTION: The interfaces are implemented by adapters which use concrete 3rd-party libraries for "external" calls.
 [[file:images/hexagonal-architecture/example-hex-arch-repos.png]]
 #+REVEAL_HTML: </div>
 
 ** Storage
-#+ATTR_REVEAL: :frag t :frag-idx 2
+#+BEGIN_leftcol60
 #+begin_src python
 from import abc import ABC, abstractmethod
 
-class DocumentStorageRepository(ABC):
+class DocumentStorageRepository(ABC):      ❶
 	""" Driven port defining an interface for storing documents """
 	@abstractmethod
 	def save(self, path: FilePath):
@@ -412,24 +422,35 @@ class DocumentStorageRepository(ABC):
 	def delete(self, uuid: uuid):
 		pass
 #+end_src
+#+END_leftcol60
+
+#+ATTR_REVEAL: :frag t
+#+BEGIN_rightcol40
+❶ ~DocumentStorageRepository~ is an /interface/ (a /port/) for describing which methods a /document storage/ implementation should have
+#+END_rightcol40
 ** Metrics
-#+ATTR_REVEAL: :frag t :frag-idx 2
+#+BEGIN_leftcol60
 #+begin_src python
 from import abc import ABC, abstractmethod
 
-class DocumentMetricsRepository(ABC):
-	""" Driven port defining an interface for sending metrics about documents """
-	@abstractmethod
+class DocumentMetricsRepository(ABC):    ❶
+""" Driven port defining an interface for sending metrics about documents"""
+@abstractmethod
 	def send_metrics(self):
 		pass
 #+end_src
+#+END_leftcol60
 
+#+ATTR_REVEAL: :frag t
+#+BEGIN_rightcol40
+❶ ~DocumentMetricsRepository~ is an /interface/ (a /port/) for describing which methods a /metrics system/ implementation should have
+#+END_rightcol40
 * Adapters
 ** Primary / driving
 *** HTTP handler
 The *handler* only depends on *entities* and *services*.
 
-#+ATTR_REVEAL: :frag t :frag-idx 2
+#+BEGIN_leftcol60
 #+begin_src python
 # HTTP controller
 from flask import Flask, request
@@ -439,7 +460,7 @@ from domain.entities import Document
 app = Flask(__name__)
 
 class HTTPController:
-    def __init__(self, upload_service: UploadDocumentService):
+    def __init__(self, upload_service: UploadDocumentService):  ❶
 	    self.upload_service = upload_service
 
 	@app.route(self, '/upload', methods=['POST'])
@@ -447,11 +468,20 @@ class HTTPController:
 		"""Uploads a document using DocumentUploadService """
 		# Create a document object
 		doc = entities.Document(request.form.get("document_path"))
-        self.upload_service.upload_document(doc)
+        self.upload_service.upload_document(doc)                ❷
 #+end_src
+#+END_leftcol60
+
+#+ATTR_REVEAL: :frag t
+#+BEGIN_rightcol40
+- ❶ The ~HTTPController~ expects a ~UploadDocumentService~
+  - we use an /abstraction/ rather than a /concrete/ implementation
+- ❷ We use the ~upload_service~ to upload a document (of type ~entities.Document~)
+#+END_rightcol40
 *** CLI handler
 The *handler* only depends on *entities* and *services*.
 
+#+BEGIN_leftcol60
 #+ATTR_REVEAL: :frag t :frag-idx 2
 #+begin_src python
 # Simpl CLI controller
@@ -460,7 +490,7 @@ from domain.services import UploadDocumentService
 from domain.entities import Document
 
 class CLIController:
-    def __init_(self, arguments, upload_service: UploadDocumentService):
+    def __init_(self, arguments, upload_service: UploadDocumentService):  ❶
 	    self.args = arguments
 		self.upload_service = upload_service
 
@@ -483,10 +513,18 @@ class CLIController:
 
 	   # Create document object
 	   doc = Document(inputfile)
-	   service.upload_service.upload_document(doc)
+	   service.upload_service.upload_document(doc)                   ❷
 #+end_src
+#+END_leftcol60
+
+#+ATTR_REVEAL: :frag t
+#+BEGIN_rightcol40
+- ❶ ~CLIController~ expects an ~UploadDocumentService~
+- uses its ~upload_document~ method to upload ❷ a document (of type ~entities.Document~)
+#+END_rightcol40
 ** Secondary / driven
 *** S3
+#+BEGIN_leftcol60
 #+ATTR_REVEAL: :frag t :frag-idx 2
 #+begin_src python
 from domain.entities import Document
@@ -497,12 +535,12 @@ class S3StorageRepository:
 	    # Initiate here connection to AWS S3
 		self.s3_conn = ...
 
-	def save(self, doc: Document):
+	def save(self, doc: Document):                   ❶
 	    # Read file contents
 		content = get_file_content(doc)
-		self.s3_conn.create_new_object(content, ...)
+		self.s3_conn.create_new_object(content, ...) ❷
 
-	def search(): List[Document]
+	def search(): List[Document]                     ❸
 	    # Search in S3 buckets and return list of documents
 		doc_list = []
 		for f in results:
@@ -512,7 +550,18 @@ class S3StorageRepository:
 		return doc_list
 	...
 #+end_src
+#+END_leftcol60
+
+#+ATTR_REVEAL: :frag t
+#+BEGIN_rightcol40
+- ~S3StorageRepository~ implements ~DocumentStorageRepository~ (interface)
+- ~save~ takes as an argument a ~Document~ and ❷ defines how and where to save the document
+  - these are implementation specific details
+- ❸ ~search~ will return a list of ~Document~
+  - instead of a /S3/ object
+#+END_rightcol40
 *** ELK
+#+BEGIN_leftcol60
 #+ATTR_REVEAL: :frag t :frag-idx 2
 #+begin_src python
 from domain.entities import Document
@@ -521,36 +570,54 @@ class ELKMetricsRepository:
     """Implements DocumentMetricsRepository """
 	def __init__(self):
 	    # Initiate here connection to ELK stack
-		self.elk_conn = ...
+		self.elk_conn = ...             ❶
 
     def send_metrics():
-	    self.elk_conn.send_data(...)
+	    self.elk_conn.send_data(...)    ❷
 #+end_src
+#+END_leftcol60
 
+#+ATTR_REVEAL: :frag t
+#+BEGIN_rightcol40
+- ~ELKMetricsRepository~ implements ~DocumentMetricsRepository~ (interface)
+- ❶ and ❷ are ELK (Elasticsearch, Logstash, Kibana) specific implementation details
+#+END_rightcol40
 * Package MAIN
 Here is where *everything* comes together.
+#+BEGIN_leftcol60
 #+ATTR_REVEAL: :frag t :frag-idx 2
 #+begin_src python
 package main
 
 def main():
         # Create new S3 storage repository
-        s3_repo = repositories.S3StorageRepository()
+        s3_repo = repositories.S3StorageRepository()      ❶
 
         # Create new ELK metrics repository
-        elk_repo = repositories.ELKMetricsRepository()
+        elk_repo = repositories.ELKMetricsRepository()    ❷
 
-        # Create new upload service
+        # Create new upload service                       ❸
         upload_service = services.UploadDocumentService(s3_repo, elk_repo)
 
-        # Create new HTTP controller/handler
+        # Create new HTTP controller/handler              ❹
         http_server = controller.HTTPController(upload_service)
         http_server.Start()
 
 if __name__ == "__main__":
     main()
-
 #+end_src
+#+END_leftcol60
+
+#+ATTR_REVEAL: :frag t
+#+BEGIN_rightcol40
+- ~main~ is where everything is /glued/ together
+- first we initialize concrete implementations (❶ and ❷)
+- the upload service /constructor/ ❸ expects 2 interfaces
+  - ~DocumentStorageRepository~ and ~DocumentMetricsRepository~
+  - ~s3_repo~ and ~elk_repo~ satisfy this /signature/
+- the HTTP handler /constructor/ (an /adapter/) expects an ~UploadDocumentService~ (service)
+  - ~upload_service~ can be used as an argument to create the HTTP handler
+#+END_rightcol40
 * Conclusion
 - the goal is to have *maintainable* code
 - changes on code level should be *easy* and *safe* to make
@@ -584,7 +651,7 @@ if __name__ == "__main__":
   - [[https://www.bustawin.com/big-sheets/][Big Sheets – Domain Driven Design with a hexagonal architecture]]
   - [[https://github.com/serfer2/flask-hexagonal-architecture-api][Simple example of Python Flask API following SOLID and Hexagonal Architecture principles]]
 - Images
-  - [[https://unsplash.com/photos/oq2WOgySksM][Background image]]
+  - [[https://unsplash.com/photos/LUamzOIFw6M][Background image]]
 * Contact
 - About ::  [[https://dornea.nu][dornea.nu]]
 - Blog :: [[https://blog.dornea.nu][blog.dornea.nu]]
