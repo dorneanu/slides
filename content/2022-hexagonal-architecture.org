@@ -3,13 +3,11 @@
 #+AUTHOR: Victor Dorneanu
 #+DATE: 2022-10
 #+STARTUP: indent fold
-
-#+SETUPFILE: reveal.setup
+#+SETUPFILE: reveal.org
 #+EXPORT_FILE_NAME: ../public/2022/hexagonal-architecture/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-layers-multicolor.css
 #+REVEAL_DEFAULT_SLIDE_BACKGROUND: https://images.unsplash.com/photo-1659365071822-13d961c215d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80
 #+REVEAL_TITLE_SLIDE_BACKGROUND: https://images.unsplash.com/photo-1659365071822-13d961c215d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80
-
 
 * Introduction
 Why should you chose {{{zk_topic(hexagonal-architecture,hexagonal architecture)}}} ?
@@ -662,4 +660,5 @@ if __name__ == "__main__":
 * Setup                                                                         :noexport:
 # Local variables:
 # after-save-hook: org-re-reveal-export-to-html
+# org-re-reveal-progress: nil
 # end:

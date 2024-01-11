@@ -3,10 +3,11 @@
 #+AUTHOR: Victor Dorneanu
 #+DATE: 2022-01
 #+STARTUP: indent fold
-
-#+SETUPFILE: reveal.setup
+#+SETUPFILE: reveal.org
+# #+PROPERTY: HEADER-ARGS+ :eval no-export
 #+EXPORT_FILE_NAME: ../public/2022/presentation-as-code/index.html
 #+REVEAL_THEME: /themes/css/reveal-code-relax.css
+#+REVEAL_HLEVEL: 2
 
 * Motivation
 - because I was sick of Powerpoint
@@ -745,7 +746,8 @@ plot data using 2:xtic(1) title 'Maths', '' using ($3) title 'Physics'
 - Twitter :: [[https://twitter.com/victordorneanu][@victordorneanu]]
 - LinkedIn :: [[https://www.linkedin.com/in/victor-dorneanu-4bba23101][linkedin.com/in/victor-dorneanu]]
 - Threema :: [[https://threema.id/HCPNAFRD][HCPNAFRD]]
-* Setup                                                                         :noexport:
+* Setup                                                     :noexport:
 # Local variables:
 # after-save-hook: org-re-reveal-export-to-html
+# org-re-reveal-progress: nil
 # end:
