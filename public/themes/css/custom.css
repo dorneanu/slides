@@ -401,3 +401,81 @@ blockquote:before,
 .reveal q {
   font-style: italic;
 }
+
+/** Custom controls *
+ * From https://oer.gitlab.io/emacs-reveal-howto/reveal.js/plugin/customcontrols/style.css
+ *
+ **/
+#customcontrols {
+	z-index: 40;
+	position: fixed;
+	left: 10px;
+	bottom: 0px;
+	text-align: center;
+	font-size: 12px;
+}
+
+#customcontrols button {
+	background: none;
+	color: var(--r-link-color);
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+	z-index: 40;
+}
+
+#customcontrols svg {
+	padding-right: 0px;
+}
+
+#customcontrols button:hover {
+	color: var(--r-link-color-hover);
+}
+
+#customcontrols > ul {
+	position: fixed;
+	left: 10px;
+	bottom: 24px;
+	list-style-type: none;
+	overflow: hidden;
+	margin: 0;
+	border: 1px solid var(--r-link-color);
+	border-radius: 5px;
+	padding: 10px;
+	background-color: var(--r-background-color)
+}
+
+#customcontrols ul > li {
+	margin: 0px 5px;
+	padding: 0px 5px;
+	float: left;
+}
+
+#customcontrols.collapsed  #collapse-customcontrols, #customcontrols.collapsed > ul  {
+	display: none;
+}
+
+#customcontrols:not(.collapsed) #expand-customcontrols {
+	display: none;
+}
+
+@media only screen and (min-width: 500px) {
+	#customcontrols > button {
+		display: none;
+	}
+	#customcontrols > ul {
+		padding-top: 0px;
+		padding-bottom: 0px;
+		bottom: 25px;
+		border: none;
+		background: none;
+	}
+}
+
+@media print {
+	#customcontrols {
+		display: none!important;
+	}
+}
