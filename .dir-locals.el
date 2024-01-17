@@ -30,6 +30,6 @@
 						  )
 						)
 				      ;; On export, convert every PNG file into base64 data
-				      (add-to-list 'org-export-filter-link-functions 'html-base64-images)
+				      ;; (add-to-list 'org-export-filter-link-functions 'html-base64-images)
                                       ))))))
  )

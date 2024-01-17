@@ -7,25 +7,38 @@
 #+macro: zk_book [[https://brainfck.org/book/$1][$2]]
 
 # Configure first slide
-#+REVEAL_TITLE_SLIDE: <h1>%t</h1><h2>%s</h2><p class="author">%d %a</p>
+# #+REVEAL_TITLE_SLIDE: <h1>%t</h1><h2>%s</h2><p class="author">%d %a</p>
 
 # Configure revealjs relevant settings
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
 #+REVEAL_VERSION: 4
-#+REVEAL_PLUGINS: (highlight zoom)
+#+REVEAL_PLUGINS: (highlight notes zoom search)
 
 # #+REVEAL_ADD_PLUGIN: chalkboard RevealChalkboard https://cdn.jsdelivr.net/gh/rajgoel/reveal.js-plugins/chalkboard/plugin.js
-#+REVEAL_ADD_PLUGIN: menu RevealMenu https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js
+# #+REVEAL_ADD_PLUGIN: menu RevealMenu https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js
 #+REVEAL_ADD_PLUGIN: chart RevealChart https://cdn.jsdelivr.net/gh/rajgoel/reveal.js-plugins/chart/plugin.js
+
+# For animations
+#+REVEAL_ADD_PLUGIN: loadcontent RevealLoadContent https://cdn.jsdelivr.net/gh/rajgoel/reveal.js-plugins/loadcontent/plugin.js
+#+REVEAL_ADD_PLUGIN: animate RevealAnimate https://cdn.jsdelivr.net/gh/rajgoel/reveal.js-plugins/animate/plugin.js
+
+# Custom controls
+#+REVEAL_ADD_PLUGIN: customcontrols RevealCustomControls https://cdn.jsdelivr.net/gh/rajgoel/reveal.js-plugins/customcontrols/plugin.js
+
+# Simple menu at the bottom
+#+REVEAL_ADD_PLUGIN: simplemenu Simplemenu https://cdn.jsdelivr.net/npm/reveal.js-simplemenu/plugin/simplemenu/simplemenu.min.js
 # #+REVEAL_ADD_PLUGIN: simpleMenu SimpleMenu plugin/simplemenu/simplemenu.js
 
 # External plugins
-#+REVEAL_EXTERNAL_PLUGINS: (simplemenu "simplemenu.js")
+# #+REVEAL_EXTERNAL_PLUGINS: (simplemenu "simplemenu.js")
 
 # Add CSS here
 #+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css"/>
 #+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-#+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/gruvbox-light-medium.min.css" />
+#+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+# Highlight js theme
+# #+REVEAL_HEAD_PREAMBLE: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/gruvbox-light-medium.min.css" />
 #+REVEAL_EXTRA_CSS: /themes/css/custom.css
 
 # Add JS here
@@ -33,3 +46,5 @@
 #+REVEAL_HEAD_PREAMBLE: <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
 #+REVEAL_HEAD_PREAMBLE: <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js" charset="utf-8"></script>
 #+REVEAL_HEAD_PREAMBLE: <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+#+REVEAL_HEAD_PREAMBLE: <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.2/svg.min.js"></script>
+#+REVEAL_HEAD_PREAMBLE: <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>

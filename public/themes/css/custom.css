@@ -437,7 +437,7 @@ blockquote:before,
 #customcontrols > ul {
 	position: fixed;
 	left: 10px;
-	bottom: 24px;
+	bottom: 20px;
 	list-style-type: none;
 	overflow: hidden;
 	margin: 0;
@@ -449,7 +449,7 @@ blockquote:before,
 
 #customcontrols ul > li {
 	margin: 0px 5px;
-	padding: 0px 5px;
+	/* padding: 0px 5px; */
 	float: left;
 }
 
@@ -468,7 +468,7 @@ blockquote:before,
 	#customcontrols > ul {
 		padding-top: 0px;
 		padding-bottom: 0px;
-		bottom: 25px;
+		bottom: 20px;
 		border: none;
 		background: none;
 	}

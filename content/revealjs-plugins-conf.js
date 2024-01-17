@@ -23,6 +23,43 @@ notes_pointer: {
 		key: 'S'
 	}
 },
+simplemenu: {
+	menuclass: "menu",
+	// activeclass: "active",
+	// activeelement: "li",
+	selectby: "data-name",
+	// flat: false,
+	// scale: 0.67,
+	barhtml: {
+        header: "",
+		footer: "<div class='menubar'><ul class='menu'></ul><div>",
+	},
+	csspath: "https://cdn.jsdelivr.net/npm/reveal.js-simplemenu/plugin/simplemenu/simplemenu.css"
+},
+customcontrols: {
+	controls: [
+		{
+          icon: '<i class="fa-solid fa-expand"></i>',
+		  title: 'Enter fullscreen (F)',
+		  action: 'Reveal.triggerKey(70);'
+		},
+		{
+          icon: '<i class="fa-solid fa-comment"></i>',
+		  title: 'Toggle notes',
+		  action: 'Reveal.configure({showNotes: !Reveal.getConfig().showNotes});'
+		},
+		{
+          icon: '<i class="fa-solid fa-magnifying-glass"></i>',
+		  title: 'Search; with (repeated) enter/return',
+		  action: 'Reveal.getPlugins().search.open();'
+		},
+		{
+          icon: '<i class="fa-solid fa-keyboard"></i>',
+		  title: 'Keyboard shortcuts (?)',
+		  action: 'Reveal.toggleHelp();'
+		}
+	],
+},
 //
 // SPOTLIGHT PLUGIN https://github.com/denniskniep/reveal.js-plugin-spotlight
 //
